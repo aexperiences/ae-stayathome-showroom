@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Billing & Invoices · Stay@Home OS</title>
+<meta name="description" content="The client side of the split rate — differentials, holidays, mileage, and payer-correct invoices from verified visits.">
+<link rel="canonical" href="https://www.aexperiences.com/apps/stayathome/billing.html">
+<meta property="og:title" content="Billing & Invoices · Stay@Home OS">
+<meta property="og:description" content="The client side of the split rate — differentials, holidays, mileage, and payer-correct invoices from verified visits.">
+<meta property="og:image" content="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<link rel="apple-touch-icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta name="theme-color" content="#2e7f7c">
+<link rel="stylesheet" href="stayathome.css">
+</head>
+<body>
+<script src="stayathome.js"></script>
+<script src="manual.js"></script>
+<script>
+(function(){
+  var S = window.StayAtHome;
+  var content = S.mount({ active:"billing.html", crumb:"Billing & Invoices" });
+  var wk = S.lastWeek();
+  content.appendChild(S.page("Billing & Invoices",
+    "Agencies bill the week that finished, on verified hours. This is week of " + S.dayLabel(wk) + " — " +
+    "every line traces back to a specific visit with a specific record behind it.", ''));
+  
+  var host = document.createElement("div"); content.appendChild(host);
+  
+  function render(){
+    host.innerHTML = "";
+    var unb = S.unbillableHours(wk);
+    host.appendChild(S.card(
+      '<div class="stats">' +
+        S.stat("Billable", S.money(S.weekRevenue(wk,"billable")), "Verified visits, week of " + S.dayLabel(wk), "good") +
+        S.stat("Delivered", S.money(S.weekRevenue(wk,"delivered")), "Everything that actually happened") +
+        S.stat("Unbillable", unb.toFixed(1) + " hrs", unb ? "Delivered but not verifiable to the payer" : "Nothing lost", unb ? "bad" : "good") +
+        S.stat("Margin", S.pct(S.weekMarginPct(wk,"delivered"),1), "After pay, burden and mileage") +
+      '</div>' +
+      (unb ? '<div class="note warn">' + unb.toFixed(1) + ' hours were worked and cannot be billed, because a payer that requires ' +
+        'EVV has no clean record for those visits. That is real money — clear the exceptions in Field Ops before the billing run.</div>' : '')
+    ));
+  
+    /* how a rate is built */
+    var sample = S.scoped(wk,"billable").filter(function(s){ return S.isWeekend(s.date); })[0] || S.scoped(wk,"billable")[0];
+    if (sample) {
+      var r = S.rateFor(sample), cl = S.clientById(sample.clientId);
+      host.appendChild(S.card(
+        '<h2>How one hour gets its price</h2>' +
+        '<p class="sub">' + S.esc(cl.name) + ' · ' + S.dayLabel(sample.date) + ' · ' + S.hhmm(sample.start) + '–' + S.hhmm(sample.end) + '. ' +
+        'Every shift on every invoice is built exactly this way.</p>' +
+        '<div class="split2"><div><h3>What the client pays</h3><table class="kv"><tbody>' +
+          '<tr><th>Base rate · ' + S.esc(sample.line) + '</th><td class="mono">' + S.money2(r.billBase) + '/hr</td></tr>' +
+          (r.billAdj ? '<tr><th>Weekend differential</th><td class="mono">+' + S.money2(r.billAdj) + '/hr</td></tr>' : '') +
+          (r.holiday ? '<tr><th>Observed holiday</th><td class="mono">× ' + S.RATE_RULES.holidayMultiplier + '</td></tr>' : '') +
+          '<tr class="tot"><th>Billed rate</th><td class="mono">' + S.money2(r.billRate) + '/hr × ' + r.hours + ' hrs = <b>' + S.money2(r.billTotal) + '</b></td></tr>' +
+        '</tbody></table></div>' +
+        '<div><h3>What it costs to deliver</h3><table class="kv"><tbody>' +
+          '<tr><th>Caregiver base</th><td class="mono">' + S.money2(r.payBase) + '/hr</td></tr>' +
+          (r.payAdj ? '<tr><th>Weekend differential</th><td class="mono">+' + S.money2(r.payAdj) + '/hr</td></tr>' : '') +
+          (r.otHrs ? '<tr><th>Overtime</th><td class="mono">' + r.otHrs.toFixed(1) + ' hrs × ' + S.RATE_RULES.otMultiplier + '</td></tr>' : '') +
+          '<tr><th>Gross pay</th><td class="mono">' + S.money2(r.payTotal) + '</td></tr>' +
+          '<tr><th>Employer burden</th><td class="mono">+' + S.money2(r.burden) + ' <span class="muted small">(' + S.pct(S.RATE_RULES.burdenPct*100,1) + ')</span></td></tr>' +
+          (r.mileageOwed ? '<tr><th>Mileage</th><td class="mono">+' + S.money2(r.mileageOwed) + '</td></tr>' : '') +
+          '<tr class="tot"><th>Margin</th><td class="mono"><b>' + S.money2(r.margin) + '</b> · ' + S.pct(r.marginPct,1) + '</td></tr>' +
+        '</tbody></table></div></div>' +
+        (r.weekend ? '<div class="note">Notice the asymmetry: the weekend adds ' + S.money2(S.RATE_RULES.weekendPayAdj) +
+          '/hr to pay but only ' + S.money2(S.RATE_RULES.weekendBillAdj) + '/hr to the bill. Weekend hours are structurally thinner. ' +
+          'That is a pricing decision, and it should be a deliberate one.</div>' : '')
+      ));
+    }
+  
+    /* invoices */
+    S.db().clients.forEach(function(cl){
+      var inv = S.invoiceFor(cl.id, wk);
+      if (!inv || !inv.lines.length) return;
+      host.appendChild(S.card(
+        '<div class="cardhead"><h2>' + S.esc(cl.name) + '</h2>' +
+        '<span class="tag">' + S.esc(inv.payer) + '</span>' +
+        (S.payerRequiresEVV(inv.payer) ? S.tag("EVV required","watch") : "") + '</div>' +
+        '<p class="sub">' + S.esc(inv.terms) + '</p>' +
+        '<div class="tablewrap"><table><thead><tr><th>Date</th><th>Time</th><th>Caregiver</th><th>Service</th>' +
+        '<th class="right">Hrs</th><th class="right">Rate</th><th>Record</th><th class="right">Amount</th></tr></thead><tbody>' +
+        inv.lines.map(function(l){
+          return '<tr><td class="mono">' + S.dayLabel(l.date) + '</td>' +
+            '<td class="mono small">' + S.hhmm(l.start) + '–' + S.hhmm(l.end) + '</td>' +
+            '<td>' + S.esc(l.caregiver) + '</td>' +
+            '<td>' + S.esc(l.line) + (l.weekend ? ' ' + S.tag("wknd","") : '') + (l.holiday ? ' ' + S.tag("holiday","watch") : '') + '</td>' +
+            '<td class="right mono">' + l.hours + '</td>' +
+            '<td class="right mono">' + S.money2(l.rate) + '</td>' +
+            '<td>' + S.tag(l.evv, S.evvBand(l.evv)) + '</td>' +
+            '<td class="right mono">' + S.money2(l.amount) + '</td></tr>';
+        }).join("") +
+        '<tr class="tot"><td colspan="4"><b>Total</b></td><td class="right mono"><b>' + inv.hours.toFixed(1) + '</b></td>' +
+        '<td></td><td></td><td class="right mono"><b>' + S.money2(inv.total) + '</b></td></tr>' +
+        '</tbody></table></div>' +
+        (inv.mileage ? '<div class="muted small">Includes ' + S.money2(inv.mileage) + ' mileage reimbursement at ' + S.money2(S.RATE_RULES.mileageRate) + '/mile.</div>' : '') +
+        '<div class="rowbtns"><button class="btn ghost" data-inv="' + cl.id + '">Format for ' + S.esc(inv.payer) + '</button></div>'
+      ));
+    });
+  
+    host.appendChild(S.card(
+      '<h2>Every payer wants it differently</h2>' +
+      '<div class="tablewrap"><table><thead><tr><th>Payer</th><th>EVV</th><th>How it bills</th><th class="right">Revenue this week</th></tr></thead><tbody>' +
+      S.PAYERS.map(function(p){
+        var rev = S.revenueByPayer(wk,"billable")[p.k] || 0;
+        return '<tr><td><b>' + S.esc(p.k) + '</b></td>' +
+          '<td>' + (p.evv ? S.tag("required","watch") : '<span class="muted">not required</span>') + '</td>' +
+          '<td class="muted small">' + S.esc(p.terms) + '</td>' +
+          '<td class="right mono">' + S.money(rev) + '</td></tr>';
+      }).join("") + '</tbody></table></div>' +
+      '<div class="note">Money movement itself — pulling a card or an ACH — needs a licensed processor. This room computes and ' +
+      'authorizes the charge; the processor moves the funds. That hop is named as a vendor rather than implied to be native.</div>'
+    ));
+  
+    Array.prototype.forEach.call(host.querySelectorAll("[data-inv]"), function(b){
+      b.addEventListener("click", function(){
+        var inv = S.invoiceFor(b.getAttribute("data-inv"), wk);
+        S.toast("Formatted for " + inv.payer + " — " + inv.lines.length + " verified visits, " + S.money2(inv.total) + ". Queued for the Approval Desk.", "ok");
+      });
+    });
+  }
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Command Center · Stay@Home OS</title>
+<meta name="description" content="The whole agency on one screen — booked revenue, margin, fill rate, EVV exceptions and what needs a decision today.">
+<link rel="canonical" href="https://www.aexperiences.com/apps/stayathome/dashboard.html">
+<meta property="og:title" content="Command Center · Stay@Home OS">
+<meta property="og:description" content="The whole agency on one screen — booked revenue, margin, fill rate, EVV exceptions and what needs a decision today.">
+<meta property="og:image" content="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<link rel="apple-touch-icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta name="theme-color" content="#2e7f7c">
+<link rel="stylesheet" href="stayathome.css">
+</head>
+<body>
+<script src="stayathome.js"></script>
+<script src="manual.js"></script>
+<script>
+(function(){
+  var S = window.StayAtHome;
+  var content = S.mount({ active:"dashboard.html", crumb:"Command Center" });
+  var wk = S.thisWeek();
+  content.appendChild(S.page("Command Center",
+    "Everything below is computed live from this agency's own shifts. Nothing on this page was typed in by hand.",
+    ''));
+  
+  /* --- the numbers */
+  var k = S.kpis();
+  content.appendChild(S.card(
+    '<h2>The week, in numbers</h2>' +
+    '<p class="sub">Week of ' + S.dayLabel(wk) + '. "Booked" is what the week is worth if it runs as scheduled; ' +
+    '"delivered" is what has actually happened so far.</p>' +
+    '<div class="stats">' + k.map(function(x){ return S.stat(x.k, x.v, x.n, x.band); }).join("") + '</div>'
+  ));
+  
+  /* --- what needs a person today */
+  var sbb = S.scheduledButBlocked(wk);
+  var open = S.openShifts(wk);
+  var exc  = S.evvExceptions();
+  var creds= S.credIssues().filter(function(i){ return i.status.state === "expired" || i.status.state === "missing"; });
+  var docs = S.docsAwaiting();
+  var overdue = S.db().referrers.filter(S.referralOverdue);
+  
+  function todoRow(band, what, why, href, cta){
+    return '<tr><td>' + S.tag(band === "bad" ? "Now" : "Today", band) + '</td>' +
+           '<td><b>' + S.esc(what) + '</b><div class="muted small">' + S.esc(why) + '</div></td>' +
+           '<td class="right"><a class="btn ghost" href="' + href + '">' + S.esc(cta) + '</a></td></tr>';
+  }
+  var todo = "";
+  if (sbb.length)  todo += todoRow("bad", sbb.length + " scheduled shift" + (sbb.length>1?"s":"") + " assigned to a blocked caregiver",
+    "A required credential has lapsed. This is the finding an auditor writes up.", "credentials.html", "Fix credentials");
+  if (open.length) todo += todoRow("watch", open.length + " open shift" + (open.length>1?"s":"") + " — " + S.openHours(wk).toFixed(1) + " hours",
+    "Unfilled hours are revenue you booked and cannot deliver.", "schedule.html", "Fill them");
+  if (exc.length)  todo += todoRow("watch", exc.length + " EVV exception" + (exc.length>1?"s":"") + " to clear",
+    "Late, out of geofence or missing a clock-out. Medicaid hours need a clean record to bill.", "evv.html", "Open Field Ops");
+  if (creds.length)todo += todoRow("bad", creds.length + " credential" + (creds.length>1?"s":"") + " expired or missing",
+    "Expired credentials pull a caregiver off the schedule automatically.", "credentials.html", "Review");
+  if (docs.length) todo += todoRow("watch", docs.length + " signature" + (docs.length>1?"s":"") + " outstanding",
+    "Sent, opened in some cases, not yet signed.", "sign.html", "Chase");
+  if (overdue.length) todo += todoRow("watch", overdue.length + " referral source past its cadence",
+    "Relationships go cold quietly. These are the ones drifting.", "referrals.html", "Log a touch");
+  if (!todo) todo = '<tr><td colspan="3" class="muted">Nothing is on fire. Every shift is covered, every credential is current, and no visit is missing a record.</td></tr>';
+  
+  content.appendChild(S.card(
+    '<h2>What needs a person today</h2>' +
+    '<p class="sub">Ranked by what actually costs money or creates exposure — not by what is newest.</p>' +
+    '<div class="tablewrap"><table><tbody>' + todo + '</tbody></table></div>'
+  ));
+  
+  /* --- today on the floor */
+  var today = S.iso(S.TODAY);
+  var rows = S.db().shifts.filter(function(s){ return s.date === today; })
+    .sort(function(a,b){ return a.start < b.start ? -1 : 1; });
+  content.appendChild(S.card(
+    '<h2>Today on the floor</h2>' +
+    '<p class="sub">' + S.dayLabel(today) + ' — every visit scheduled for today and where it stands.</p>' +
+    '<div class="tablewrap"><table><thead><tr><th>Time</th><th>Client</th><th>Caregiver</th>' +
+    '<th>Service</th><th>EVV</th><th class="right">Margin</th></tr></thead><tbody>' +
+    (rows.length ? rows.map(function(s){
+      var cl = S.clientById(s.clientId), r = S.rateFor(s), st = S.evvState(s);
+      return '<tr><td class="mono">' + S.hhmm(s.start) + '–' + S.hhmm(s.end) + '</td>' +
+        '<td><b>' + S.esc(cl ? cl.name : "—") + '</b><div class="muted small">' + S.esc(cl ? cl.city : "") + '</div></td>' +
+        '<td>' + (s.caregiverId ? S.esc(S.caregiverName(s.caregiverId)) : '<i class="muted">unassigned</i>') + '</td>' +
+        '<td><span class="dotc" style="background:' + S.lineColor(s.line) + '"></span>' + S.esc(s.line) + '</td>' +
+        '<td>' + S.tag(st, S.evvBand(st)) + '</td>' +
+        '<td class="right mono">' + (r && s.caregiverId ? S.money2(r.margin) : "—") + '</td></tr>';
+    }).join("") : '<tr><td colspan="6" class="muted">No visits scheduled today.</td></tr>') +
+    '</tbody></table></div>'
+  ));
+  
+  /* --- where the money is actually made */
+  var mpl = S.marginPctBy(wk, "assigned", function(s){ return s.line; });
+  var mpp = S.marginPctBy(wk, "assigned", function(s){ return s.payer; });
+  var rl  = S.revenueByLine(wk, "assigned");
+  var lines = Object.keys(rl).sort(function(a,b){ return rl[b]-rl[a]; });
+  var payers = Object.keys(mpp).sort(function(a,b){ return mpp[a]-mpp[b]; });
+  content.appendChild(S.card(
+    '<h2>Where the money is actually made</h2>' +
+    '<p class="sub">Revenue tells you how busy you are. Margin tells you whether being busy was worth it. ' +
+    'Both are computed from this week\'s assigned shifts.</p>' +
+    '<div class="tablewrap"><table><thead><tr><th>Service line</th><th class="right">Revenue</th>' +
+    '<th class="right">Margin</th><th>Share of margin</th></tr></thead><tbody>' +
+    lines.map(function(L){
+      var m = mpl[L] || 0;
+      return '<tr><td><span class="dotc" style="background:' + S.lineColor(L) + '"></span><b>' + S.esc(L) + '</b></td>' +
+        '<td class="right mono">' + S.money(rl[L]) + '</td>' +
+        '<td class="right mono ' + (m < 20 ? "warn" : "") + '">' + S.pct(m,0) + '</td>' +
+        '<td style="min-width:160px">' + S.bar(m * 2, S.lineColor(L)) + '</td></tr>';
+    }).join("") + '</tbody></table></div>' +
+    '<div class="tablewrap" style="margin-top:14px"><table><thead><tr><th>Payer</th><th class="right">Margin</th><th>Why it differs</th></tr></thead><tbody>' +
+    payers.map(function(P){
+      return '<tr><td><b>' + S.esc(P) + '</b></td><td class="right mono ' + ((mpp[P]||0) < 20 ? "warn" : "") + '">' + S.pct(mpp[P]||0,0) + '</td>' +
+        '<td class="muted small">' + S.esc(S.payer(P).terms) + '</td></tr>';
+    }).join("") + '</tbody></table></div>' +
+    S.srcNote("Computed from this hub's own shifts, pay rates and the published differential rules. No industry benchmark is asserted — none has been sourced into this build.")
+  ));
+})();
+</script>
+</body>
+</html>

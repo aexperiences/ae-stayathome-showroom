@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Recruiting · ATS · Stay@Home OS</title>
+<meta name="description" content="A mobile-first applicant funnel scored against the shifts you actually cannot fill. Native — no vendor for direct applications.">
+<link rel="canonical" href="https://www.aexperiences.com/apps/stayathome/recruiting.html">
+<meta property="og:title" content="Recruiting · ATS · Stay@Home OS">
+<meta property="og:description" content="A mobile-first applicant funnel scored against the shifts you actually cannot fill. Native — no vendor for direct applications.">
+<meta property="og:image" content="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<link rel="apple-touch-icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta name="theme-color" content="#2e7f7c">
+<link rel="stylesheet" href="stayathome.css">
+</head>
+<body>
+<script src="stayathome.js"></script>
+<script src="manual.js"></script>
+<script>
+(function(){
+  var S = window.StayAtHome;
+  var content = S.mount({ active:"recruiting.html", crumb:"Recruiting · ATS" });
+  content.appendChild(S.page("Recruiting",
+    "Turnover in this industry is high enough that recruiting never stops. Applicants are scored on the only question that matters " +
+    "for an hourly workforce: does their availability cover hours you cannot currently fill?",
+    '<button class="btn" id="addAp">+ Log an application</button>'));
+  
+  var host = document.createElement("div"); content.appendChild(host);
+  
+  function render(){
+    host.innerHTML = "";
+    var counts = S.pipelineCounts();
+    var open = S.openShifts(S.thisWeek());
+  
+    host.appendChild(S.card(
+      '<div class="stats">' +
+        S.stat("In the pipeline", S.db().applicants.filter(function(a){return a.stage!=="Declined"&&a.stage!=="Active";}).length, "Applied through onboarding") +
+        S.stat("Avg time to hire", S.timeToHireDays() == null ? "—" : S.timeToHireDays() + " days", "Application to onboarding") +
+        S.stat("Open shifts to cover", open.length, S.openHours(S.thisWeek()).toFixed(1) + " hours this week", open.length ? "watch" : "good") +
+        S.stat("Active caregivers", S.db().caregivers.filter(function(c){return c.status==="Active";}).length, "On the roster today") +
+      '</div>' +
+      '<div class="pipe">' + S.ATS_STAGES.map(function(st){
+        return '<div class="pipe-col"><div class="pipe-n">' + (counts[st]||0) + '</div><div class="pipe-l">' + S.esc(st) + '</div></div>';
+      }).join("") + '</div>'
+    ));
+  
+    host.appendChild(S.card(
+      '<h2>The pipeline</h2>' +
+      '<p class="sub">The score is not a resume grade. It weights whether this person can actually work the hours you are short.</p>' +
+      '<div class="tablewrap"><table><thead><tr><th>Applicant</th><th>Applied</th><th>Source</th>' +
+      '<th class="right">Fit</th><th>Why</th><th>Stage</th></tr></thead><tbody>' +
+      S.db().applicants.map(function(a){
+        var sc = S.screenScore(a);
+        return '<tr><td><b>' + S.esc(a.name) + '</b><div class="muted small">' + S.esc(a.city) + ' · ' + S.esc(a.phone) + '</div></td>' +
+          '<td class="mono">' + S.esc(a.applied) + '</td>' +
+          '<td>' + S.esc(a.source) + '</td>' +
+          '<td class="right"><b class="score">' + sc.score + '</b></td>' +
+          '<td class="why">' + sc.reasons.map(function(r){ return '<span class="rz">' + S.esc(r) + '</span>'; }).join("") + '</td>' +
+          '<td><select data-stage="' + a.id + '">' + S.ATS_STAGES.map(function(st){
+              return '<option' + (st===a.stage?" selected":"") + '>' + S.esc(st) + '</option>'; }).join("") + '</select></td></tr>';
+      }).join("") + '</tbody></table></div>'
+    ));
+  
+    host.appendChild(S.card(
+      '<h2>The careers page</h2>' +
+      '<p class="sub">Your own hosted application funnel — no login, no password, no account to create. ' +
+      'An applicant fills it on a phone in under two minutes and lands straight in the pipeline above.</p>' +
+      '<div class="split2">' +
+        '<div><h3>What it asks</h3><ul class="ticks">' +
+          '<li>Name and mobile number</li><li>Which days and hours they can work</li>' +
+          '<li>Whether they have a vehicle</li><li>Certifications already held</li>' +
+          '<li>Experience, in one line</li></ul>' +
+          '<p class="muted small">That is the whole form. Every extra field on an hourly application funnel loses candidates.</p></div>' +
+        '<div><h3>What happens next</h3><ul class="ticks">' +
+          '<li>Scored against your open shifts automatically</li>' +
+          '<li>Anyone covering an open shift is flagged for same-day contact</li>' +
+          '<li>Interview self-scheduling into the office calendar</li>' +
+          '<li>Offer goes out as a native e-sign employment packet</li>' +
+          '<li>Signed packet files itself into Records</li></ul></div>' +
+      '</div>' +
+      '<div class="rowbtns"><a class="btn" href="apply.html">Open the public careers page</a></div>' +
+      '<div class="note">Direct applications need no third party. Posting <i>into</i> Indeed or ZipRecruiter uses their own API — ' +
+      'that hop is a vendor integration, and it is listed as one rather than implied to be native.</div>'
+    ));
+  
+    Array.prototype.forEach.call(host.querySelectorAll("[data-stage]"), function(sel){
+      sel.addEventListener("change", function(){
+        S.moveApplicant(sel.getAttribute("data-stage"), sel.value);
+        S.toast("Moved to " + sel.value + ".", "ok"); render();
+      });
+    });
+  }
+  render();
+  
+  document.getElementById("addAp").addEventListener("click", function(){
+    var n = prompt("Applicant name"); if (!n) return;
+    var ph = prompt("Mobile number", "(208) 555-") || "";
+    var city = prompt("City", S.db().agency.city) || "";
+    S.addApplicant({ name:n, phone:ph, city:city, source:"Logged by the office" });
+    S.toast("Logged. Score it, then move them along.", "ok"); render();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Field Ops · EVV · Stay@Home OS</title>
+<meta name="description" content="Electronic Visit Verification — clock-in with time, place and tasks, geofence and no-show alerts, offline capture.">
+<link rel="canonical" href="https://www.aexperiences.com/apps/stayathome/evv.html">
+<meta property="og:title" content="Field Ops · EVV · Stay@Home OS">
+<meta property="og:description" content="Electronic Visit Verification — clock-in with time, place and tasks, geofence and no-show alerts, offline capture.">
+<meta property="og:image" content="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<link rel="apple-touch-icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta name="theme-color" content="#2e7f7c">
+<link rel="stylesheet" href="stayathome.css">
+</head>
+<body>
+<script src="stayathome.js"></script>
+<script src="manual.js"></script>
+<script>
+(function(){
+  var S = window.StayAtHome;
+  var content = S.mount({ active:"evv.html", crumb:"Field Ops · EVV" });
+  var host = document.createElement("div");
+  content.appendChild(S.page("Field Ops · EVV",
+    "Every visit records who was there, when they arrived and left, where they were, and what was done. " +
+    "For Medicaid waiver hours that record is not paperwork — it is the condition of getting paid.",
+    ''));
+  content.appendChild(host);
+  
+  function render(){
+    host.innerHTML = "";
+    var comp = S.evvCompliancePct(), exc = S.evvExceptions();
+    var live = S.db().shifts.filter(function(s){ return s.status === "In progress"; });
+    var today = S.iso(S.TODAY);
+    var due = S.db().shifts.filter(function(s){ return s.date === today && s.status === "Booked" && s.caregiverId; });
+  
+    host.appendChild(S.card(
+      '<h2>Verification, last ' + S.EVV_WINDOW_DAYS + ' days</h2>' +
+      '<p class="sub">Judged on a rolling window, not a calendar week — a percentage taken off a single day is noise.</p>' +
+      '<div class="stats">' +
+        S.stat("Clean", comp == null ? "—" : S.pct(comp), S.recentCompleted().length + " completed visits in the window", (comp||0) >= 95 ? "good" : "watch") +
+        S.stat("Exceptions", exc.length, "Late, geofence, or missing a clock-out", exc.length ? "watch" : "good") +
+        S.stat("On visit now", live.length, "Clocked in, not yet clocked out", "good") +
+        S.stat("Due to start today", due.length, "Scheduled, not yet clocked in") +
+        S.stat("Geofence", S.EVV.geofenceMeters + " m", "Clock-in must land inside this radius of the home") +
+        S.stat("Unbillable", S.unbillableHours(S.lastWeek()).toFixed(1) + " hrs", "Last week — delivered, not verifiable", S.unbillableHours(S.lastWeek()) ? "bad" : "good") +
+      '</div>' +
+      S.srcNote("Thresholds are this agency's own policy: " + S.EVV.lateGraceMin + " min grace before LATE, " +
+        S.EVV.noShowMin + " min before a NO-SHOW alert, " + S.EVV.missedOutHrs + " hrs past the end before MISSED CLOCK-OUT.")
+    ));
+  
+    /* live board */
+    host.appendChild(S.card(
+      '<h2>On visit right now</h2>' +
+      (live.length ?
+        '<div class="tablewrap"><table><thead><tr><th>Caregiver</th><th>Client</th><th>In</th><th>Due out</th><th></th></tr></thead><tbody>' +
+        live.map(function(s){
+          var cl = S.clientById(s.clientId);
+          return '<tr><td><b>' + S.esc(S.caregiverName(s.caregiverId)) + '</b></td>' +
+            '<td>' + S.esc(cl?cl.name:"") + '<div class="muted small">' + S.esc(cl?cl.city:"") + '</div></td>' +
+            '<td class="mono">' + S.hhmm(s.start) + ' ' + S.tag("in geofence","good") + '</td>' +
+            '<td class="mono">' + S.hhmm(s.end) + '</td>' +
+            '<td class="right"><button class="btn" data-out="' + s.id + '">Clock out &amp; log tasks</button></td></tr>';
+        }).join("") + '</tbody></table></div>'
+        : '<p class="muted">Nobody is clocked in at this moment.</p>')
+    ));
+  
+    /* start a visit */
+    if (due.length) {
+      host.appendChild(S.card(
+        '<h2>Due to start today</h2>' +
+        '<p class="sub">This is the caregiver-app action, shown here so you can see exactly what it captures. ' +
+        'Try clocking one in outside the geofence, or offline, and watch the record change.</p>' +
+        '<div class="tablewrap"><table><thead><tr><th>Time</th><th>Caregiver</th><th>Client</th><th class="right">Clock in as…</th></tr></thead><tbody>' +
+        due.map(function(s){
+          var cl = S.clientById(s.clientId);
+          return '<tr><td class="mono">' + S.hhmm(s.start) + '</td>' +
+            '<td>' + S.esc(S.caregiverName(s.caregiverId)) + '</td>' +
+            '<td>' + S.esc(cl?cl.name:"") + '</td>' +
+            '<td class="right rowbtns">' +
+              '<button class="btn" data-in="' + s.id + '" data-mode="ok">At the home</button>' +
+              '<button class="btn ghost" data-in="' + s.id + '" data-mode="geo">Outside the geofence</button>' +
+              '<button class="btn ghost" data-in="' + s.id + '" data-mode="off">No signal (offline)</button>' +
+            '</td></tr>';
+        }).join("") + '</tbody></table></div>'
+      ));
+    }
+  
+    /* exceptions */
+    host.appendChild(S.card(
+      '<h2>Exceptions to clear</h2>' +
+      '<p class="sub">Each one is a real consequence, not a warning light. A Medicaid visit without a clean record is not billable — ' +
+      'the Books room counts those hours as unbillable rather than quietly calling them revenue.</p>' +
+      (exc.length ?
+        '<div class="tablewrap"><table><thead><tr><th>Date</th><th>Client</th><th>Caregiver</th><th>Issue</th><th>Payer</th><th class="right">At stake</th></tr></thead><tbody>' +
+        exc.map(function(s){
+          var cl = S.clientById(s.clientId), st = S.evvState(s), r = S.rateFor(s);
+          var risk = S.payerRequiresEVV(s.payer) && !S.isBillable(s);
+          return '<tr><td class="mono">' + S.dayLabel(s.date) + '</td>' +
+            '<td>' + S.esc(cl?cl.name:"") + '</td><td>' + S.esc(S.caregiverName(s.caregiverId)) + '</td>' +
+            '<td>' + S.tag(st, S.evvBand(st)) + '</td>' +
+            '<td>' + S.esc(s.payer) + (S.payerRequiresEVV(s.payer) ? ' ' + S.tag("EVV required","watch") : "") + '</td>' +
+            '<td class="right mono ' + (risk?"warn":"") + '">' + (risk ? S.money2(r.billTotal) + " at risk" : "billable") + '</td></tr>';
+        }).join("") + '</tbody></table></div>'
+        : '<p class="muted">Nothing outstanding. Every completed visit in the window carries a clean record.</p>')
+    ));
+  
+    /* offline explainer */
+    host.appendChild(S.card(
+      '<h2>Working where there is no signal</h2>' +
+      '<p>Caregivers work in basements, rural valleys and concrete buildings. The clock-in captures the timestamp and ' +
+      'coordinates on the device and syncs when the connection returns. The audit record keeps the <b>original</b> time, ' +
+      'not the sync time — otherwise every rural visit would look late.</p>' +
+      '<p class="muted small">Visits captured offline are labelled as such on the record, so an auditor can see why the ' +
+      'transmission time and the visit time differ.</p>'
+    ));
+  
+    Array.prototype.forEach.call(host.querySelectorAll("[data-in]"), function(b){
+      b.addEventListener("click", function(){
+        var mode = b.getAttribute("data-mode");
+        S.clockIn(b.getAttribute("data-in"), { geo: mode !== "geo", offline: mode === "off", lateMin: 0 });
+        S.toast(mode === "geo" ? "Clocked in OUTSIDE the geofence — flagged for review."
+              : mode === "off" ? "Captured offline. It will sync with the original time."
+              : "Clocked in at the home.", mode === "ok" ? "ok" : "warn");
+        render();
+      });
+    });
+    Array.prototype.forEach.call(host.querySelectorAll("[data-out]"), function(b){
+      b.addEventListener("click", function(){ taskSheet(b.getAttribute("data-out")); });
+    });
+  }
+  
+  /* ---- the task sheet: where the scope guardrail is enforced */
+  function taskSheet(shiftId){
+    var s = S.shiftById(shiftId), cl = S.clientById(s.clientId);
+    var wrap = document.createElement("div"); wrap.className = "modal-scrim";
+    wrap.innerHTML =
+      '<div class="modal"><h2>Log the visit — ' + S.esc(cl.name) + '</h2>' +
+      '<p class="sub">Tick what was actually done. Only tasks on this client\'s authorized care plan can be logged.</p>' +
+      '<div id="taskList">' +
+        cl.plan.map(function(t){
+          return '<label class="chk"><input type="checkbox" value="' + S.esc(t) + '" checked> ' + S.esc(t) + '</label>';
+        }).join("") +
+      '</div>' +
+      '<h3 style="margin-top:16px">Not on this plan</h3>' +
+      '<p class="sub">These exist in the catalogue but are not authorized for this client. Ticking one asks the office to amend the plan — it does not log the task.</p>' +
+      '<div>' +
+        S.TASKS_ALLOWED.filter(function(t){ return cl.plan.indexOf(t.k) < 0; }).map(function(t){
+          return '<label class="chk off"><input type="checkbox" data-unauth="1" value="' + S.esc(t.k) + '"> ' + S.esc(t.k) + '</label>';
+        }).join("") +
+      '</div>' +
+      '<h3 style="margin-top:16px" class="warn">Cannot be performed or logged</h3>' +
+      '<p class="sub">These are licensed nursing acts. A non-medical caregiver may not do them, so the system will not record them. ' +
+      'Tap one to see why.</p>' +
+      '<div>' +
+        S.TASKS_BLOCKED.map(function(t){
+          return '<button class="chk blocked" data-why="' + S.esc(t.k) + '">⃠ ' + S.esc(t.k) + '</button>';
+        }).join("") +
+      '</div>' +
+      '<label class="fld" style="margin-top:14px"><span>Shift note</span>' +
+      '<textarea id="vnote" rows="3" placeholder="Anything the next caregiver or the family should know."></textarea></label>' +
+      '<div class="rowbtns" style="margin-top:14px"><button class="btn" id="saveVisit">Clock out</button>' +
+      '<button class="btn ghost" id="cancelVisit">Cancel</button></div></div>';
+    document.body.appendChild(wrap);
+  
+    wrap.querySelectorAll("[data-why]").forEach(function(b){
+      b.addEventListener("click", function(){
+        S.toast(b.getAttribute("data-why") + " — " + S.blockReason(b.getAttribute("data-why")), "bad");
+      });
+    });
+    wrap.querySelector("#cancelVisit").addEventListener("click", function(){ wrap.remove(); });
+    wrap.querySelector("#saveVisit").addEventListener("click", function(){
+      var picked = [], asked = [];
+      wrap.querySelectorAll('input[type=checkbox]').forEach(function(c){
+        if (!c.checked) return;
+        if (c.getAttribute("data-unauth")) asked.push(c.value); else picked.push(c.value);
+      });
+      S.clockOut(shiftId, picked, wrap.querySelector("#vnote").value);
+      wrap.remove();
+      S.toast(asked.length
+        ? "Visit logged. " + asked.length + " task(s) outside the plan were sent to the office as a plan-change request, not recorded as done."
+        : "Visit logged and verified.", "ok");
+      render();
+    });
+  }
+  render();
+})();
+</script>
+</body>
+</html>

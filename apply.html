@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Caregiver jobs — apply in two minutes</title>
+<meta name="description" content="Apply to be a caregiver. No account, no password, no resume needed — tell us when you can work and we will call you.">
+<link rel="icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta name="theme-color" content="#2e7f7c">
+<link rel="stylesheet" href="stayathome.css">
+<style>
+  body{background:var(--paper)}
+  .wrap{max-width:620px;margin:0 auto;padding:20px 16px 90px}
+  .hero{background:linear-gradient(160deg,#2e7f7c,#1d5250);color:#fff;border-radius:18px;padding:28px 26px;margin-bottom:20px}
+  .hero img{width:48px;height:48px;border-radius:11px;display:block;margin-bottom:14px}
+  .hero h1{margin:0 0 8px;font-size:25px;line-height:1.2}
+  .hero p{margin:0;font-size:14.5px;line-height:1.6;opacity:.92}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-bottom:16px;box-shadow:var(--sh)}
+  .box h2{margin:0 0 4px;font-size:17px;color:var(--ink)}
+  .box .sub{margin:0 0 16px;font-size:13px;color:var(--mut)}
+  .days{display:grid;grid-template-columns:74px 1fr;gap:8px;align-items:center;margin-bottom:8px}
+  .days label{font-size:13px;color:var(--ink-2);font-weight:600}
+  .days input{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:9px;font:inherit;font-size:14px;background:var(--card);color:var(--ink)}
+  .certs{display:flex;flex-wrap:wrap;gap:8px}
+  .certs label{border:1px solid var(--line);border-radius:20px;padding:7px 14px;font-size:13px;cursor:pointer;color:var(--ink-2);background:var(--card)}
+  .certs input{margin-right:6px}
+  .go{width:100%;padding:16px;font-size:16px;font-weight:600;border:none;border-radius:12px;background:var(--tang);color:#fff;cursor:pointer}
+  .go:hover{background:var(--tang-2)}
+  .done{text-align:center;padding:44px 20px}
+  .done .big{font-size:48px;color:var(--good)}
+  @media(max-width:520px){.hero{padding:22px 18px}.box{padding:18px 16px}.days{grid-template-columns:64px 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <img src="https://www.aexperiences.com/StayAtHome_OS.png" alt="">
+    <h1>Caregiver jobs — <span id="agName">apply in two minutes</span></h1>
+    <p>No account. No password. No resume. Tell us when you can work and we will call you — usually the same day if your
+       hours match a shift we need covered.</p>
+  </div>
+
+  <div id="root">
+    <div class="box">
+      <h2>About you</h2>
+      <p class="sub">Two fields. That is genuinely it.</p>
+      <label class="fld"><span>Your name</span><input id="aName" autocomplete="name"></label>
+      <label class="fld"><span>Mobile number</span><input id="aPhone" type="tel" autocomplete="tel" placeholder="(208) 555-0000"></label>
+      <label class="fld"><span>Town you live in</span><input id="aCity" autocomplete="address-level2"></label>
+    </div>
+
+    <div class="box">
+      <h2>When can you work?</h2>
+      <p class="sub">The most important question on this form. Leave a day blank if you cannot work it.
+         Write it however you like — <i>6a-2p</i>, <i>mornings</i>, <i>after 3</i>.</p>
+      <div id="dayRows"></div>
+      <label class="chk" style="margin-top:8px"><input type="checkbox" id="aCar" checked> I have a vehicle I can use for work</label>
+    </div>
+
+    <div class="box">
+      <h2>Anything you already hold?</h2>
+      <p class="sub">Nothing here is required — we train. It just means we can move faster.</p>
+      <div class="certs" id="certs"></div>
+      <label class="fld" style="margin-top:16px"><span>Experience, in one line</span>
+        <input id="aExp" placeholder="e.g. 3 years in assisted living — or 'none, but I looked after my mum'"></label>
+    </div>
+
+    <button class="go" id="submit">Send my application</button>
+    <p class="muted small" style="text-align:center;margin-top:12px">
+      We will only use this to contact you about caregiving work.</p>
+  </div>
+
+  <div class="ae-credit" style="margin-top:24px">
+    Careers page powered by <b>Accelerated Experiences LLC</b>. Applications land straight in the agency's own system —
+    no job board in the middle.
+  </div>
+</div>
+
+<script src="stayathome.js"></script>
+<script>
+(function(){
+  var S = window.StayAtHome;
+  var DAYS = [["mon","Monday"],["tue","Tuesday"],["wed","Wednesday"],["thu","Thursday"],
+              ["fri","Friday"],["sat","Saturday"],["sun","Sunday"]];
+  document.getElementById("agName").textContent = "join " + S.db().agency.name;
+
+  document.getElementById("dayRows").innerHTML = DAYS.map(function(d){
+    return '<div class="days"><label for="d_' + d[0] + '">' + d[1] + '</label>' +
+           '<input id="d_' + d[0] + '" placeholder="e.g. 6a-2p"></div>';
+  }).join("");
+
+  document.getElementById("certs").innerHTML = S.CREDS.filter(function(c){ return c.k !== "Orientation hours" && c.k !== "Annual in-service"; })
+    .map(function(c){ return '<label><input type="checkbox" value="' + S.esc(c.k) + '">' + S.esc(c.k) + '</label>'; }).join("");
+
+  document.getElementById("submit").addEventListener("click", function(){
+    var name = document.getElementById("aName").value.trim();
+    var phone = document.getElementById("aPhone").value.trim();
+    if (!name || !phone) { alert("We need a name and a mobile number to call you back."); return; }
+    var avail = {};
+    DAYS.forEach(function(d){ avail[d[0]] = document.getElementById("d_" + d[0]).value.trim(); });
+    var certs = [];
+    document.querySelectorAll("#certs input:checked").forEach(function(c){ certs.push(c.value); });
+
+    var ap = S.addApplicant({
+      name:name, phone:phone, city:document.getElementById("aCity").value.trim(),
+      avail:avail, certs:certs, hasCar:document.getElementById("aCar").checked,
+      exp:document.getElementById("aExp").value.trim(), source:"Careers page"
+    });
+    var sc = S.screenScore(ap);
+    var hot = sc.covers.length > 0;
+
+    document.getElementById("root").innerHTML =
+      '<div class="box done"><div class="big">✓</div>' +
+      '<h2 style="font-size:21px">Thank you, ' + S.esc(name.split(" ")[0]) + '</h2>' +
+      '<p style="font-size:14.5px;line-height:1.65;color:var(--ink-2);max-width:44ch;margin:10px auto 0">' +
+      (hot
+        ? 'Your hours cover <b>' + sc.covers.length + ' shift' + (sc.covers.length>1?'s':'') +
+          '</b> we are trying to fill right now. Someone from the office will call you today.'
+        : 'We have your application. If a shift comes up that fits your hours, we will call.') +
+      '</p><p class="muted small" style="margin-top:18px">Nothing else is needed from you right now — ' +
+      'no forms to print, no portal to sign into.</p></div>';
+    window.scrollTo(0,0);
+  });
+})();
+</script>
+</body>
+</html>

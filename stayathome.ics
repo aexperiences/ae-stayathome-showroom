@@ -1,0 +1,1391 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Accelerated Experiences LLC//Stay@Home OS//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Cedar Hollow Home Care — visits
+X-WR-CALDESC:Every scheduled visit. Open shifts carry OPEN in the title so they are impossible to miss.
+X-WR-TIMEZONE:America/Los_Angeles
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:sh1@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260713T080000
+DTEND;TZID=America/Los_Angeles:20260713T120000
+SUMMARY:Eleanor Whitfield — Alma Reyes
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Alma Reyes
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh2@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260715T080000
+DTEND;TZID=America/Los_Angeles:20260715T120000
+SUMMARY:Eleanor Whitfield — Alma Reyes
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Alma Reyes
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh3@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260717T080000
+DTEND;TZID=America/Los_Angeles:20260717T120000
+SUMMARY:Eleanor Whitfield — Priya Raman
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Priya Raman
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh4@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260713T070000
+DTEND;TZID=America/Los_Angeles:20260713T110000
+SUMMARY:Harold Bequette — Denise Whitmore
+LOCATION:Hayden\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Denise Whitmore
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh5@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260714T070000
+DTEND;TZID=America/Los_Angeles:20260714T110000
+SUMMARY:Harold Bequette — Denise Whitmore
+LOCATION:Hayden\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Denise Whitmore
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh6@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260716T070000
+DTEND;TZID=America/Los_Angeles:20260716T110000
+SUMMARY:Harold Bequette — Hank Sorensen
+LOCATION:Hayden\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Hank Sorensen
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh7@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260717T070000
+DTEND;TZID=America/Los_Angeles:20260717T110000
+SUMMARY:Harold Bequette — Junia Oyelaran
+LOCATION:Hayden\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh8@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260714T100000
+DTEND;TZID=America/Los_Angeles:20260714T140000
+SUMMARY:Marguerite Sol — Corinne Vasquez
+LOCATION:Post Falls\, ID
+DESCRIPTION:Companion Care · Completed\nCaregiver: Corinne Vasquez
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh9@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260716T100000
+DTEND;TZID=America/Los_Angeles:20260716T140000
+SUMMARY:Marguerite Sol — Corinne Vasquez
+LOCATION:Post Falls\, ID
+DESCRIPTION:Companion Care · Completed\nCaregiver: Corinne Vasquez
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh10@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260718T100000
+DTEND;TZID=America/Los_Angeles:20260718T140000
+SUMMARY:Marguerite Sol — Marcus Delgado
+LOCATION:Post Falls\, ID
+DESCRIPTION:Companion Care · Completed\nCaregiver: Marcus Delgado
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh11@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260713T130000
+DTEND;TZID=America/Los_Angeles:20260713T190000
+SUMMARY:Vernon Ashby — Beatrix Nowak
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Dementia Care · Completed\nCaregiver: Beatrix Nowak
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh12@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260714T130000
+DTEND;TZID=America/Los_Angeles:20260714T190000
+SUMMARY:Vernon Ashby — Beatrix Nowak
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Dementia Care · Completed\nCaregiver: Beatrix Nowak
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh13@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260715T130000
+DTEND;TZID=America/Los_Angeles:20260715T190000
+SUMMARY:Vernon Ashby — Rosalind Fairley
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Dementia Care · Completed\nCaregiver: Rosalind Fairley
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh14@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260716T130000
+DTEND;TZID=America/Los_Angeles:20260716T190000
+SUMMARY:Vernon Ashby — Corinne Vasquez
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Dementia Care · Completed\nCaregiver: Corinne Vasquez
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh15@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260717T130000
+DTEND;TZID=America/Los_Angeles:20260717T190000
+SUMMARY:Vernon Ashby — Beatrix Nowak
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Dementia Care · Completed\nCaregiver: Beatrix Nowak
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh16@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260712T090000
+DTEND;TZID=America/Los_Angeles:20260712T150000
+SUMMARY:Ruth Ilminen — Rosalind Fairley
+LOCATION:Rathdrum\, ID
+DESCRIPTION:Respite · Completed\nCaregiver: Rosalind Fairley
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh17@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260718T090000
+DTEND;TZID=America/Los_Angeles:20260718T150000
+SUMMARY:Ruth Ilminen — Rosalind Fairley
+LOCATION:Rathdrum\, ID
+DESCRIPTION:Respite · Completed\nCaregiver: Rosalind Fairley
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh18@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260713T200000
+DTEND;TZID=America/Los_Angeles:20260714T060000
+SUMMARY:Cliff Barrone — Hank Sorensen
+LOCATION:Post Falls\, ID
+DESCRIPTION:Overnight · Completed\nCaregiver: Hank Sorensen
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh19@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260714T200000
+DTEND;TZID=America/Los_Angeles:20260715T060000
+SUMMARY:Cliff Barrone — Hank Sorensen
+LOCATION:Post Falls\, ID
+DESCRIPTION:Overnight · Completed\nCaregiver: Hank Sorensen
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh20@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260715T200000
+DTEND;TZID=America/Los_Angeles:20260716T060000
+SUMMARY:Cliff Barrone — Hank Sorensen
+LOCATION:Post Falls\, ID
+DESCRIPTION:Overnight · Completed\nCaregiver: Hank Sorensen
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh21@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260716T200000
+DTEND;TZID=America/Los_Angeles:20260717T060000
+SUMMARY:Cliff Barrone — Hank Sorensen
+LOCATION:Post Falls\, ID
+DESCRIPTION:Overnight · Completed\nCaregiver: Hank Sorensen
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh22@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260713T090000
+DTEND;TZID=America/Los_Angeles:20260713T130000
+SUMMARY:Inez Caldwell — Priya Raman
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Priya Raman
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh23@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260715T090000
+DTEND;TZID=America/Los_Angeles:20260715T130000
+SUMMARY:Inez Caldwell — Priya Raman
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Priya Raman
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh24@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260717T090000
+DTEND;TZID=America/Los_Angeles:20260717T130000
+SUMMARY:Inez Caldwell — Junia Oyelaran
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh25@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260714T090000
+DTEND;TZID=America/Los_Angeles:20260714T120000
+SUMMARY:Warren Tsai — Tyrell Booker
+LOCATION:Hayden\, ID
+DESCRIPTION:Transportation · Completed\nCaregiver: Tyrell Booker
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh26@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260716T090000
+DTEND;TZID=America/Los_Angeles:20260716T120000
+SUMMARY:Warren Tsai — Tyrell Booker
+LOCATION:Hayden\, ID
+DESCRIPTION:Transportation · Completed\nCaregiver: Tyrell Booker
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh27@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260713T110000
+DTEND;TZID=America/Los_Angeles:20260713T150000
+SUMMARY:Dorothy Pell — Selma Achebe
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Companion Care · Completed\nCaregiver: Selma Achebe
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh28@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260715T110000
+DTEND;TZID=America/Los_Angeles:20260715T150000
+SUMMARY:Dorothy Pell — Selma Achebe
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Companion Care · Completed\nCaregiver: Selma Achebe
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh29@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260717T110000
+DTEND;TZID=America/Los_Angeles:20260717T150000
+SUMMARY:Dorothy Pell — Selma Achebe
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Companion Care · Completed\nCaregiver: Selma Achebe
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh30@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260713T070000
+DTEND;TZID=America/Los_Angeles:20260713T130000
+SUMMARY:Sal Moretti — Tyrell Booker
+LOCATION:Post Falls\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Tyrell Booker
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh31@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260714T070000
+DTEND;TZID=America/Los_Angeles:20260714T130000
+SUMMARY:Sal Moretti — Tyrell Booker
+LOCATION:Post Falls\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Tyrell Booker
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh32@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260715T070000
+DTEND;TZID=America/Los_Angeles:20260715T130000
+SUMMARY:Sal Moretti — Selma Achebe
+LOCATION:Post Falls\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Selma Achebe
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh33@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260716T070000
+DTEND;TZID=America/Los_Angeles:20260716T130000
+SUMMARY:Sal Moretti — Tyrell Booker
+LOCATION:Post Falls\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Tyrell Booker
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh34@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260717T070000
+DTEND;TZID=America/Los_Angeles:20260717T130000
+SUMMARY:Sal Moretti — Selma Achebe
+LOCATION:Post Falls\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Selma Achebe
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh35@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260714T130000
+DTEND;TZID=America/Los_Angeles:20260714T160000
+SUMMARY:Faye Lindqvist — Junia Oyelaran
+LOCATION:Rathdrum\, ID
+DESCRIPTION:Companion Care · Completed\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh36@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260716T130000
+DTEND;TZID=America/Los_Angeles:20260716T160000
+SUMMARY:Faye Lindqvist — Junia Oyelaran
+LOCATION:Rathdrum\, ID
+DESCRIPTION:Companion Care · Completed\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh37@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260713T100000
+DTEND;TZID=America/Los_Angeles:20260713T140000
+SUMMARY:Bertram Oduya — Junia Oyelaran
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh38@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260715T100000
+DTEND;TZID=America/Los_Angeles:20260715T140000
+SUMMARY:Bertram Oduya — Junia Oyelaran
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh39@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260717T100000
+DTEND;TZID=America/Los_Angeles:20260717T140000
+SUMMARY:Bertram Oduya — Junia Oyelaran
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh40@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260713T060000
+DTEND;TZID=America/Los_Angeles:20260713T180000
+SUMMARY:Lucille Trapp — Denise Whitmore
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Completed\nCaregiver: Denise Whitmore
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh41@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260714T060000
+DTEND;TZID=America/Los_Angeles:20260714T180000
+SUMMARY:Lucille Trapp — Beatrix Nowak
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Completed\nCaregiver: Beatrix Nowak
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh42@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260715T060000
+DTEND;TZID=America/Los_Angeles:20260715T180000
+SUMMARY:Lucille Trapp — Denise Whitmore
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Completed\nCaregiver: Denise Whitmore
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh43@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260716T060000
+DTEND;TZID=America/Los_Angeles:20260716T180000
+SUMMARY:Lucille Trapp — Beatrix Nowak
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Completed\nCaregiver: Beatrix Nowak
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh44@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260717T060000
+DTEND;TZID=America/Los_Angeles:20260717T180000
+SUMMARY:Lucille Trapp — Denise Whitmore
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Completed\nCaregiver: Denise Whitmore
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh45@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260718T060000
+DTEND;TZID=America/Los_Angeles:20260718T180000
+SUMMARY:Lucille Trapp — Rosalind Fairley
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Completed\nCaregiver: Rosalind Fairley
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh46@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260712T060000
+DTEND;TZID=America/Los_Angeles:20260712T180000
+SUMMARY:Lucille Trapp — Rosalind Fairley
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Completed\nCaregiver: Rosalind Fairley
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh47@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260720T080000
+DTEND;TZID=America/Los_Angeles:20260720T120000
+SUMMARY:Eleanor Whitfield — Alma Reyes
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Alma Reyes
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh48@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260722T080000
+DTEND;TZID=America/Los_Angeles:20260722T120000
+SUMMARY:Eleanor Whitfield — Alma Reyes
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Alma Reyes
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh49@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260724T080000
+DTEND;TZID=America/Los_Angeles:20260724T120000
+SUMMARY:Eleanor Whitfield — Priya Raman
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Priya Raman
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh50@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260720T070000
+DTEND;TZID=America/Los_Angeles:20260720T110000
+SUMMARY:Harold Bequette — Denise Whitmore
+LOCATION:Hayden\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Denise Whitmore
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh51@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260721T070000
+DTEND;TZID=America/Los_Angeles:20260721T110000
+SUMMARY:Harold Bequette — Denise Whitmore
+LOCATION:Hayden\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Denise Whitmore
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh52@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260723T070000
+DTEND;TZID=America/Los_Angeles:20260723T110000
+SUMMARY:Harold Bequette — Hank Sorensen
+LOCATION:Hayden\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Hank Sorensen
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh53@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260724T070000
+DTEND;TZID=America/Los_Angeles:20260724T110000
+SUMMARY:Harold Bequette — Junia Oyelaran
+LOCATION:Hayden\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh54@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260721T100000
+DTEND;TZID=America/Los_Angeles:20260721T140000
+SUMMARY:Marguerite Sol — Corinne Vasquez
+LOCATION:Post Falls\, ID
+DESCRIPTION:Companion Care · Completed\nCaregiver: Corinne Vasquez
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh55@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260723T100000
+DTEND;TZID=America/Los_Angeles:20260723T140000
+SUMMARY:Marguerite Sol — Corinne Vasquez
+LOCATION:Post Falls\, ID
+DESCRIPTION:Companion Care · Completed\nCaregiver: Corinne Vasquez
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh56@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260725T100000
+DTEND;TZID=America/Los_Angeles:20260725T140000
+SUMMARY:Marguerite Sol — Marcus Delgado
+LOCATION:Post Falls\, ID
+DESCRIPTION:Companion Care · Completed\nCaregiver: Marcus Delgado
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh57@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260720T130000
+DTEND;TZID=America/Los_Angeles:20260720T190000
+SUMMARY:Vernon Ashby — Beatrix Nowak
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Dementia Care · Completed\nCaregiver: Beatrix Nowak
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh58@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260721T130000
+DTEND;TZID=America/Los_Angeles:20260721T190000
+SUMMARY:Vernon Ashby — Beatrix Nowak
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Dementia Care · Completed\nCaregiver: Beatrix Nowak
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh59@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260722T130000
+DTEND;TZID=America/Los_Angeles:20260722T190000
+SUMMARY:Vernon Ashby — Rosalind Fairley
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Dementia Care · Completed\nCaregiver: Rosalind Fairley
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh60@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260723T130000
+DTEND;TZID=America/Los_Angeles:20260723T190000
+SUMMARY:Vernon Ashby — Corinne Vasquez
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Dementia Care · Completed\nCaregiver: Corinne Vasquez
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh61@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260724T130000
+DTEND;TZID=America/Los_Angeles:20260724T190000
+SUMMARY:Vernon Ashby — Beatrix Nowak
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Dementia Care · Completed\nCaregiver: Beatrix Nowak
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh62@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260719T090000
+DTEND;TZID=America/Los_Angeles:20260719T150000
+SUMMARY:Ruth Ilminen — Rosalind Fairley
+LOCATION:Rathdrum\, ID
+DESCRIPTION:Respite · Completed\nCaregiver: Rosalind Fairley
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh63@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260725T090000
+DTEND;TZID=America/Los_Angeles:20260725T150000
+SUMMARY:Ruth Ilminen — Rosalind Fairley
+LOCATION:Rathdrum\, ID
+DESCRIPTION:Respite · Completed\nCaregiver: Rosalind Fairley
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh64@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260720T200000
+DTEND;TZID=America/Los_Angeles:20260721T060000
+SUMMARY:Cliff Barrone — Hank Sorensen
+LOCATION:Post Falls\, ID
+DESCRIPTION:Overnight · Completed\nCaregiver: Hank Sorensen
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh65@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260721T200000
+DTEND;TZID=America/Los_Angeles:20260722T060000
+SUMMARY:Cliff Barrone — Hank Sorensen
+LOCATION:Post Falls\, ID
+DESCRIPTION:Overnight · Completed\nCaregiver: Hank Sorensen
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh66@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260722T200000
+DTEND;TZID=America/Los_Angeles:20260723T060000
+SUMMARY:Cliff Barrone — Hank Sorensen
+LOCATION:Post Falls\, ID
+DESCRIPTION:Overnight · Completed\nCaregiver: Hank Sorensen
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh67@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260723T200000
+DTEND;TZID=America/Los_Angeles:20260724T060000
+SUMMARY:Cliff Barrone — Hank Sorensen
+LOCATION:Post Falls\, ID
+DESCRIPTION:Overnight · Completed\nCaregiver: Hank Sorensen
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh68@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260720T090000
+DTEND;TZID=America/Los_Angeles:20260720T130000
+SUMMARY:Inez Caldwell — Priya Raman
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Priya Raman
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh69@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260722T090000
+DTEND;TZID=America/Los_Angeles:20260722T130000
+SUMMARY:Inez Caldwell — Priya Raman
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Priya Raman
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh70@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260724T090000
+DTEND;TZID=America/Los_Angeles:20260724T130000
+SUMMARY:Inez Caldwell — Junia Oyelaran
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh71@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260721T090000
+DTEND;TZID=America/Los_Angeles:20260721T120000
+SUMMARY:Warren Tsai — Tyrell Booker
+LOCATION:Hayden\, ID
+DESCRIPTION:Transportation · Completed\nCaregiver: Tyrell Booker
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh72@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260723T090000
+DTEND;TZID=America/Los_Angeles:20260723T120000
+SUMMARY:Warren Tsai — Tyrell Booker
+LOCATION:Hayden\, ID
+DESCRIPTION:Transportation · Completed\nCaregiver: Tyrell Booker
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh73@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260720T110000
+DTEND;TZID=America/Los_Angeles:20260720T150000
+SUMMARY:Dorothy Pell — Selma Achebe
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Companion Care · Completed\nCaregiver: Selma Achebe
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh74@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260722T110000
+DTEND;TZID=America/Los_Angeles:20260722T150000
+SUMMARY:Dorothy Pell — Selma Achebe
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Companion Care · Completed\nCaregiver: Selma Achebe
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh75@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260724T110000
+DTEND;TZID=America/Los_Angeles:20260724T150000
+SUMMARY:Dorothy Pell — Selma Achebe
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Companion Care · Completed\nCaregiver: Selma Achebe
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh76@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260720T070000
+DTEND;TZID=America/Los_Angeles:20260720T130000
+SUMMARY:Sal Moretti — Tyrell Booker
+LOCATION:Post Falls\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Tyrell Booker
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh77@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260721T070000
+DTEND;TZID=America/Los_Angeles:20260721T130000
+SUMMARY:Sal Moretti — Tyrell Booker
+LOCATION:Post Falls\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Tyrell Booker
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh78@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260722T070000
+DTEND;TZID=America/Los_Angeles:20260722T130000
+SUMMARY:Sal Moretti — Selma Achebe
+LOCATION:Post Falls\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Selma Achebe
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh79@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260723T070000
+DTEND;TZID=America/Los_Angeles:20260723T130000
+SUMMARY:Sal Moretti — Tyrell Booker
+LOCATION:Post Falls\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Tyrell Booker
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh80@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260724T070000
+DTEND;TZID=America/Los_Angeles:20260724T130000
+SUMMARY:Sal Moretti — Selma Achebe
+LOCATION:Post Falls\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Selma Achebe
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh81@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260721T130000
+DTEND;TZID=America/Los_Angeles:20260721T160000
+SUMMARY:Faye Lindqvist — Junia Oyelaran
+LOCATION:Rathdrum\, ID
+DESCRIPTION:Companion Care · Completed\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh82@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260723T130000
+DTEND;TZID=America/Los_Angeles:20260723T160000
+SUMMARY:Faye Lindqvist — Junia Oyelaran
+LOCATION:Rathdrum\, ID
+DESCRIPTION:Companion Care · Completed\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh83@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260720T100000
+DTEND;TZID=America/Los_Angeles:20260720T140000
+SUMMARY:Bertram Oduya — Junia Oyelaran
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh84@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260722T100000
+DTEND;TZID=America/Los_Angeles:20260722T140000
+SUMMARY:Bertram Oduya — Junia Oyelaran
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh85@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260724T100000
+DTEND;TZID=America/Los_Angeles:20260724T140000
+SUMMARY:Bertram Oduya — Junia Oyelaran
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Completed\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh86@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260720T060000
+DTEND;TZID=America/Los_Angeles:20260720T180000
+SUMMARY:Lucille Trapp — Denise Whitmore
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Completed\nCaregiver: Denise Whitmore
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh87@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260721T060000
+DTEND;TZID=America/Los_Angeles:20260721T180000
+SUMMARY:Lucille Trapp — Beatrix Nowak
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Completed\nCaregiver: Beatrix Nowak
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh88@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260722T060000
+DTEND;TZID=America/Los_Angeles:20260722T180000
+SUMMARY:Lucille Trapp — Denise Whitmore
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Completed\nCaregiver: Denise Whitmore
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh89@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260723T060000
+DTEND;TZID=America/Los_Angeles:20260723T180000
+SUMMARY:Lucille Trapp — Beatrix Nowak
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Completed\nCaregiver: Beatrix Nowak
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh90@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260724T060000
+DTEND;TZID=America/Los_Angeles:20260724T180000
+SUMMARY:Lucille Trapp — Denise Whitmore
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Completed\nCaregiver: Denise Whitmore
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh91@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260725T060000
+DTEND;TZID=America/Los_Angeles:20260725T180000
+SUMMARY:Lucille Trapp — Rosalind Fairley
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Completed\nCaregiver: Rosalind Fairley
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh92@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260719T060000
+DTEND;TZID=America/Los_Angeles:20260719T180000
+SUMMARY:Lucille Trapp — Rosalind Fairley
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Completed\nCaregiver: Rosalind Fairley
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh93@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260727T080000
+DTEND;TZID=America/Los_Angeles:20260727T120000
+SUMMARY:Eleanor Whitfield — Alma Reyes
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · In progress\nCaregiver: Alma Reyes
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh94@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260729T080000
+DTEND;TZID=America/Los_Angeles:20260729T120000
+SUMMARY:Eleanor Whitfield — Alma Reyes
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Booked\nCaregiver: Alma Reyes
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh95@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260731T080000
+DTEND;TZID=America/Los_Angeles:20260731T120000
+SUMMARY:Eleanor Whitfield — Priya Raman
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Booked\nCaregiver: Priya Raman
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh96@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260727T070000
+DTEND;TZID=America/Los_Angeles:20260727T110000
+SUMMARY:Harold Bequette — Denise Whitmore
+LOCATION:Hayden\, ID
+DESCRIPTION:Personal Care · In progress\nCaregiver: Denise Whitmore
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh97@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260728T070000
+DTEND;TZID=America/Los_Angeles:20260728T110000
+SUMMARY:Harold Bequette — Denise Whitmore
+LOCATION:Hayden\, ID
+DESCRIPTION:Personal Care · Booked\nCaregiver: Denise Whitmore
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh98@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260730T070000
+DTEND;TZID=America/Los_Angeles:20260730T110000
+SUMMARY:Harold Bequette — Hank Sorensen
+LOCATION:Hayden\, ID
+DESCRIPTION:Personal Care · Booked\nCaregiver: Hank Sorensen
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh99@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260731T070000
+DTEND;TZID=America/Los_Angeles:20260731T110000
+SUMMARY:OPEN · Harold Bequette — OPEN — needs a caregiver
+LOCATION:Hayden\, ID
+DESCRIPTION:Personal Care · OPEN\nThis shift is not covered.
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh100@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260728T100000
+DTEND;TZID=America/Los_Angeles:20260728T140000
+SUMMARY:Marguerite Sol — Corinne Vasquez
+LOCATION:Post Falls\, ID
+DESCRIPTION:Companion Care · Booked\nCaregiver: Corinne Vasquez
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh101@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260730T100000
+DTEND;TZID=America/Los_Angeles:20260730T140000
+SUMMARY:Marguerite Sol — Corinne Vasquez
+LOCATION:Post Falls\, ID
+DESCRIPTION:Companion Care · Booked\nCaregiver: Corinne Vasquez
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh102@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260801T100000
+DTEND;TZID=America/Los_Angeles:20260801T140000
+SUMMARY:Marguerite Sol — Marcus Delgado
+LOCATION:Post Falls\, ID
+DESCRIPTION:Companion Care · Booked\nCaregiver: Marcus Delgado
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh103@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260727T130000
+DTEND;TZID=America/Los_Angeles:20260727T190000
+SUMMARY:Vernon Ashby — Beatrix Nowak
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Dementia Care · In progress\nCaregiver: Beatrix Nowak
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh104@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260728T130000
+DTEND;TZID=America/Los_Angeles:20260728T190000
+SUMMARY:Vernon Ashby — Beatrix Nowak
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Dementia Care · Booked\nCaregiver: Beatrix Nowak
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh105@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260729T130000
+DTEND;TZID=America/Los_Angeles:20260729T190000
+SUMMARY:Vernon Ashby — Rosalind Fairley
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Dementia Care · Booked\nCaregiver: Rosalind Fairley
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh106@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260730T130000
+DTEND;TZID=America/Los_Angeles:20260730T190000
+SUMMARY:OPEN · Vernon Ashby — OPEN — needs a caregiver
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Dementia Care · OPEN\nThis shift is not covered.
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh107@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260731T130000
+DTEND;TZID=America/Los_Angeles:20260731T190000
+SUMMARY:Vernon Ashby — Beatrix Nowak
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Dementia Care · Booked\nCaregiver: Beatrix Nowak
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh108@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260726T090000
+DTEND;TZID=America/Los_Angeles:20260726T150000
+SUMMARY:Ruth Ilminen — Rosalind Fairley
+LOCATION:Rathdrum\, ID
+DESCRIPTION:Respite · Completed\nCaregiver: Rosalind Fairley
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh109@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260801T090000
+DTEND;TZID=America/Los_Angeles:20260801T150000
+SUMMARY:Ruth Ilminen — Rosalind Fairley
+LOCATION:Rathdrum\, ID
+DESCRIPTION:Respite · Booked\nCaregiver: Rosalind Fairley
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh110@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260727T200000
+DTEND;TZID=America/Los_Angeles:20260728T060000
+SUMMARY:Cliff Barrone — Hank Sorensen
+LOCATION:Post Falls\, ID
+DESCRIPTION:Overnight · In progress\nCaregiver: Hank Sorensen
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh111@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260728T200000
+DTEND;TZID=America/Los_Angeles:20260729T060000
+SUMMARY:Cliff Barrone — Hank Sorensen
+LOCATION:Post Falls\, ID
+DESCRIPTION:Overnight · Booked\nCaregiver: Hank Sorensen
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh112@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260729T200000
+DTEND;TZID=America/Los_Angeles:20260730T060000
+SUMMARY:Cliff Barrone — Hank Sorensen
+LOCATION:Post Falls\, ID
+DESCRIPTION:Overnight · Booked\nCaregiver: Hank Sorensen
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh113@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260730T200000
+DTEND;TZID=America/Los_Angeles:20260731T060000
+SUMMARY:Cliff Barrone — Hank Sorensen
+LOCATION:Post Falls\, ID
+DESCRIPTION:Overnight · Booked\nCaregiver: Hank Sorensen
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh114@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260727T090000
+DTEND;TZID=America/Los_Angeles:20260727T130000
+SUMMARY:Inez Caldwell — Priya Raman
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · In progress\nCaregiver: Priya Raman
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh115@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260729T090000
+DTEND;TZID=America/Los_Angeles:20260729T130000
+SUMMARY:Inez Caldwell — Priya Raman
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Booked\nCaregiver: Priya Raman
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh116@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260731T090000
+DTEND;TZID=America/Los_Angeles:20260731T130000
+SUMMARY:Inez Caldwell — Junia Oyelaran
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Booked\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh117@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260728T090000
+DTEND;TZID=America/Los_Angeles:20260728T120000
+SUMMARY:Warren Tsai — Tyrell Booker
+LOCATION:Hayden\, ID
+DESCRIPTION:Transportation · Booked\nCaregiver: Tyrell Booker
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh118@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260730T090000
+DTEND;TZID=America/Los_Angeles:20260730T120000
+SUMMARY:Warren Tsai — Tyrell Booker
+LOCATION:Hayden\, ID
+DESCRIPTION:Transportation · Booked\nCaregiver: Tyrell Booker
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh119@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260727T110000
+DTEND;TZID=America/Los_Angeles:20260727T150000
+SUMMARY:Dorothy Pell — Selma Achebe
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Companion Care · In progress\nCaregiver: Selma Achebe
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh120@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260729T110000
+DTEND;TZID=America/Los_Angeles:20260729T150000
+SUMMARY:Dorothy Pell — Selma Achebe
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Companion Care · Booked\nCaregiver: Selma Achebe
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh121@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260731T110000
+DTEND;TZID=America/Los_Angeles:20260731T150000
+SUMMARY:Dorothy Pell — Selma Achebe
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Companion Care · Booked\nCaregiver: Selma Achebe
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh122@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260727T070000
+DTEND;TZID=America/Los_Angeles:20260727T130000
+SUMMARY:Sal Moretti — Tyrell Booker
+LOCATION:Post Falls\, ID
+DESCRIPTION:Personal Care · In progress\nCaregiver: Tyrell Booker
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh123@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260728T070000
+DTEND;TZID=America/Los_Angeles:20260728T130000
+SUMMARY:Sal Moretti — Tyrell Booker
+LOCATION:Post Falls\, ID
+DESCRIPTION:Personal Care · Booked\nCaregiver: Tyrell Booker
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh124@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260729T070000
+DTEND;TZID=America/Los_Angeles:20260729T130000
+SUMMARY:Sal Moretti — Selma Achebe
+LOCATION:Post Falls\, ID
+DESCRIPTION:Personal Care · Booked\nCaregiver: Selma Achebe
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh125@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260730T070000
+DTEND;TZID=America/Los_Angeles:20260730T130000
+SUMMARY:Sal Moretti — Tyrell Booker
+LOCATION:Post Falls\, ID
+DESCRIPTION:Personal Care · Booked\nCaregiver: Tyrell Booker
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh126@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260731T070000
+DTEND;TZID=America/Los_Angeles:20260731T130000
+SUMMARY:Sal Moretti — Selma Achebe
+LOCATION:Post Falls\, ID
+DESCRIPTION:Personal Care · Booked\nCaregiver: Selma Achebe
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh127@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260728T130000
+DTEND;TZID=America/Los_Angeles:20260728T160000
+SUMMARY:Faye Lindqvist — Junia Oyelaran
+LOCATION:Rathdrum\, ID
+DESCRIPTION:Companion Care · Booked\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh128@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260730T130000
+DTEND;TZID=America/Los_Angeles:20260730T160000
+SUMMARY:Faye Lindqvist — Junia Oyelaran
+LOCATION:Rathdrum\, ID
+DESCRIPTION:Companion Care · Booked\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh129@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260727T100000
+DTEND;TZID=America/Los_Angeles:20260727T140000
+SUMMARY:Bertram Oduya — Junia Oyelaran
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · In progress\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh130@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260729T100000
+DTEND;TZID=America/Los_Angeles:20260729T140000
+SUMMARY:Bertram Oduya — Junia Oyelaran
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · Booked\nCaregiver: Junia Oyelaran
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh131@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260731T100000
+DTEND;TZID=America/Los_Angeles:20260731T140000
+SUMMARY:OPEN · Bertram Oduya — OPEN — needs a caregiver
+LOCATION:Coeur d'Alene\, ID
+DESCRIPTION:Personal Care · OPEN\nThis shift is not covered.
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh132@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260727T060000
+DTEND;TZID=America/Los_Angeles:20260727T180000
+SUMMARY:Lucille Trapp — Denise Whitmore
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · In progress\nCaregiver: Denise Whitmore
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh133@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260728T060000
+DTEND;TZID=America/Los_Angeles:20260728T180000
+SUMMARY:Lucille Trapp — Beatrix Nowak
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Booked\nCaregiver: Beatrix Nowak
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh134@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260729T060000
+DTEND;TZID=America/Los_Angeles:20260729T180000
+SUMMARY:Lucille Trapp — Denise Whitmore
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Booked\nCaregiver: Denise Whitmore
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh135@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260730T060000
+DTEND;TZID=America/Los_Angeles:20260730T180000
+SUMMARY:Lucille Trapp — Beatrix Nowak
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Booked\nCaregiver: Beatrix Nowak
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh136@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260731T060000
+DTEND;TZID=America/Los_Angeles:20260731T180000
+SUMMARY:Lucille Trapp — Denise Whitmore
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Booked\nCaregiver: Denise Whitmore
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh137@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260801T060000
+DTEND;TZID=America/Los_Angeles:20260801T180000
+SUMMARY:Lucille Trapp — Rosalind Fairley
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Booked\nCaregiver: Rosalind Fairley
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:sh138@stayathome.aexperiences.com
+DTSTAMP:20260727T120000Z
+DTSTART;TZID=America/Los_Angeles:20260726T060000
+DTEND;TZID=America/Los_Angeles:20260726T180000
+SUMMARY:Lucille Trapp — Rosalind Fairley
+LOCATION:Hayden\, ID
+DESCRIPTION:Live-in · Completed\nCaregiver: Rosalind Fairley
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR

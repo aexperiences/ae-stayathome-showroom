@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Care Plans · Stay@Home OS</title>
+<meta name="description" content="The authorized task list per client, and the hard guardrail that stops a clinical task being logged by a non-medical caregiver.">
+<link rel="canonical" href="https://www.aexperiences.com/apps/stayathome/careplans.html">
+<meta property="og:title" content="Care Plans · Stay@Home OS">
+<meta property="og:description" content="The authorized task list per client, and the hard guardrail that stops a clinical task being logged by a non-medical caregiver.">
+<meta property="og:image" content="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<link rel="apple-touch-icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta name="theme-color" content="#2e7f7c">
+<link rel="stylesheet" href="stayathome.css">
+</head>
+<body>
+<script src="stayathome.js"></script>
+<script src="manual.js"></script>
+<script>
+(function(){
+  var S = window.StayAtHome;
+  var content = S.mount({ active:"careplans.html", crumb:"Care Plans" });
+  content.appendChild(S.page("Care Plans & the scope guardrail",
+    "Each client has an authorized task list. Caregivers can log those tasks and nothing else. " +
+    "This is the licensure boundary, so it is enforced in code — not in a policy binder nobody reads.", ''));
+  
+  content.appendChild(S.card(
+    '<h2>Where the line sits</h2>' +
+    '<div class="split2">' +
+      '<div><h3>A non-medical caregiver MAY</h3><ul class="ticks">' +
+        S.TASKS_ALLOWED.map(function(t){
+          return '<li><b>' + S.esc(t.k) + '</b> <span class="muted small">' + S.esc(t.cat) + '</span>' +
+            (t.note ? '<div class="muted small">' + S.esc(t.note) + '</div>' : '') + '</li>';
+        }).join("") +
+      '</ul></div>' +
+      '<div><h3 class="warn">A non-medical caregiver MAY NOT</h3><ul class="crosses">' +
+        S.TASKS_BLOCKED.map(function(t){
+          return '<li><b>' + S.esc(t.k) + '</b><div class="muted small">' + S.esc(t.why) + '</div></li>';
+        }).join("") +
+      '</ul></div>' +
+    '</div>' +
+    S.srcNote("The split follows the general non-medical / skilled-nursing boundary. Exact delegation rules vary by state — " +
+              "confirm yours with your licensing body before going live. This is not legal or clinical advice.")
+  ));
+  
+  var host = document.createElement("div"); content.appendChild(host);
+  function render(){
+    host.innerHTML = "";
+    S.db().clients.forEach(function(cl){
+      var doc = S.db().documents.filter(function(d){ return d.subjectId===cl.id && d.tpl==="t_careplan"; })[0];
+      host.appendChild(S.card(
+        '<div class="cardhead"><h2>' + S.esc(cl.name) + '</h2>' +
+        '<span class="tag">' + S.esc(cl.line) + '</span>' +
+        '<span class="tag">' + S.esc(cl.payer) + '</span>' +
+        (doc ? S.tag("acknowledgement " + doc.status.toLowerCase(), doc.status==="Signed"?"good":"watch")
+             : S.tag("no signed acknowledgement","watch")) + '</div>' +
+        '<p class="sub">' + S.esc(cl.dx) + '</p>' +
+        '<div class="split2">' +
+          '<div><h3>Authorized tasks</h3><div class="chips">' +
+            cl.plan.map(function(t){ return '<span class="chip static">' + S.esc(t) + '</span>'; }).join("") +
+          '</div></div>' +
+          '<div><h3>Care detail</h3><table class="kv"><tbody>' +
+            '<tr><th>Skills the care needs</th><td>' + (cl.needs.length ? S.esc(cl.needs.join(", ")) : '<i class="muted">none specific</i>') + '</td></tr>' +
+            '<tr><th>Client preferences</th><td>' + (cl.prefs.length ? S.esc(cl.prefs.join(", ")) : '<i class="muted">none stated</i>') + '</td></tr>' +
+            '<tr><th>Family on the account</th><td>' + cl.family.map(function(f){
+                return S.esc(f.name) + ' <span class="muted small">(' + S.esc(f.rel) + ' · ' + S.esc(f.role) + ')</span>'; }).join("<br>") + '</td></tr>' +
+            '<tr><th>Started</th><td class="mono">' + S.esc(cl.start) + '</td></tr>' +
+          '</tbody></table></div>' +
+        '</div>' +
+        '<div class="rowbtns"><button class="btn ghost" data-edit="' + cl.id + '">Edit the plan</button>' +
+        '<a class="btn ghost" href="sign.html">Send an acknowledgement</a></div>'
+      ));
+    });
+    Array.prototype.forEach.call(host.querySelectorAll("[data-edit]"), function(b){
+      b.addEventListener("click", function(){ editPlan(b.getAttribute("data-edit")); });
+    });
+  }
+  function editPlan(id){
+    var cl = S.clientById(id);
+    var wrap = document.createElement("div"); wrap.className = "modal-scrim";
+    wrap.innerHTML = '<div class="modal"><h2>' + S.esc(cl.name) + ' — authorized tasks</h2>' +
+      '<p class="sub">Only the care coordinator can change a plan. Whatever is ticked here is what caregivers are able to log.</p>' +
+      S.TASKS_ALLOWED.map(function(t){
+        return '<label class="chk"><input type="checkbox" value="' + S.esc(t.k) + '"' +
+          (cl.plan.indexOf(t.k)>=0?" checked":"") + '> ' + S.esc(t.k) + '</label>';
+      }).join("") +
+      '<div class="note warn" style="margin-top:14px">Clinical tasks are not on this list and cannot be added. ' +
+      'If a client genuinely needs one, they need a home health agency with licensed nurses, not a home care aide.</div>' +
+      '<div class="rowbtns" style="margin-top:14px"><button class="btn" id="savePlan">Save the plan</button>' +
+      '<button class="btn ghost" id="cancelPlan">Cancel</button></div></div>';
+    document.body.appendChild(wrap);
+    wrap.querySelector("#cancelPlan").addEventListener("click", function(){ wrap.remove(); });
+    wrap.querySelector("#savePlan").addEventListener("click", function(){
+      var picked = [];
+      wrap.querySelectorAll('input[type=checkbox]').forEach(function(c){ if (c.checked) picked.push(c.value); });
+      S.updateClient(id, { plan: picked });
+      wrap.remove(); S.toast("Plan updated. The family should re-acknowledge it.", "ok"); render();
+    });
+  }
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>e-Sign · Stay@Home OS</title>
+<meta name="description" content="Native electronic signatures — agreements, employment packets and care plan acknowledgements, with a full audit trail.">
+<link rel="canonical" href="https://www.aexperiences.com/apps/stayathome/sign.html">
+<meta property="og:title" content="e-Sign · Stay@Home OS">
+<meta property="og:description" content="Native electronic signatures — agreements, employment packets and care plan acknowledgements, with a full audit trail.">
+<meta property="og:image" content="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<link rel="apple-touch-icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta name="theme-color" content="#2e7f7c">
+<link rel="stylesheet" href="stayathome.css">
+</head>
+<body>
+<script src="stayathome.js"></script>
+<script src="manual.js"></script>
+<script>
+(function(){
+  var S = window.StayAtHome;
+  var content = S.mount({ active:"sign.html", crumb:"e-Sign" });
+  content.appendChild(S.page("e-Sign",
+    "Native signatures. No DocuSign, no PandaDoc, no per-envelope fee. Pick a template, mint a link, and the signer opens it " +
+    "in any browser with no account and no app.",
+    '<button class="btn" id="newDoc">+ New document</button>'));
+  
+  var host = document.createElement("div"); content.appendChild(host);
+  
+  function statusBand(s){ return s==="Signed"?"good":s==="Draft"?"":"watch"; }
+  
+  function render(){
+    host.innerHTML = "";
+    var docs = S.db().documents;
+  
+    host.appendChild(S.card(
+      '<div class="stats">' +
+        S.stat("Signed", docs.filter(function(d){return d.status==="Signed";}).length, "Frozen, filed, reproducible", "good") +
+        S.stat("Out for signature", S.docsAwaiting().length, "Sent or opened, not yet signed", S.docsAwaiting().length?"watch":"good") +
+        S.stat("Drafts", docs.filter(function(d){return d.status==="Draft";}).length, "Not yet released") +
+        S.stat("Templates", S.DOC_TEMPLATES.length, "Agreement, care plan, employment, privacy, payer auth") +
+      '</div>'
+    ));
+  
+    host.appendChild(S.card(
+      '<h2>Documents</h2>' +
+      '<div class="tablewrap"><table><thead><tr><th>Document</th><th>For</th><th>Signer</th>' +
+      '<th>Status</th><th>Link</th><th></th></tr></thead><tbody>' +
+      (docs.length ? docs.map(function(d){
+        return '<tr><td><b>' + S.esc(d.title) + '</b><div class="muted small mono">' + S.esc(d.created) + '</div></td>' +
+          '<td>' + S.esc(d.subject) + '</td>' +
+          '<td>' + S.esc(d.signer.name || "—") + '<div class="muted small">' + S.esc(d.signer.role||"") + '</div></td>' +
+          '<td>' + S.tag(d.status, statusBand(d.status)) + '</td>' +
+          '<td>' + (d.status==="Draft" ? '<i class="muted">not minted</i>' :
+                    '<code class="tok">' + S.esc(d.token) + '</code>') + '</td>' +
+          '<td class="right rowbtns">' +
+            (d.status==="Draft" ? '<button class="btn" data-send="' + d.id + '">Mint the link</button>' : '') +
+            (d.status!=="Draft" ? '<a class="btn ghost" href="sign-doc.html?d=' + encodeURIComponent(d.token) + '" target="_blank">Open as the signer</a>' : '') +
+            '<button class="btn ghost" data-audit="' + d.id + '">Audit trail</button>' +
+          '</td></tr>';
+      }).join("") : '<tr><td colspan="6" class="muted">No documents yet. Start one from a template.</td></tr>') +
+      '</tbody></table></div>'
+    ));
+  
+    host.appendChild(S.card(
+      '<h2>How signing works here</h2>' +
+      '<div class="split2">' +
+        '<div><h3>The four things the law turns on</h3><ul class="ticks">' +
+          '<li><b>Consent</b> — the signer agrees to do business electronically, in plain language, before anything else.</li>' +
+          '<li><b>Intent</b> — they adopt a signature deliberately by drawing or typing it, then press a button that says what it does.</li>' +
+          '<li><b>Attribution</b> — the link is unguessable and single-purpose; every open and every action is stamped with who and when.</li>' +
+          '<li><b>Retention</b> — the record freezes on signature and files into Records, reproducible in full.</li>' +
+        '</ul></div>' +
+        '<div><h3>What it deliberately does not claim</h3>' +
+        '<p>This module captures all four. It is <b>not legal advice</b>, and e-signature acceptance varies by document type and by ' +
+        'state — employment and healthcare paperwork especially. Have your attorney read the consent language and your retention ' +
+        'practice before you rely on it.</p>' +
+        '<p class="muted small">Saying so plainly is the point. A tool that quietly implies legal cover it cannot give is worse than one that has none.</p>' +
+        '</div>' +
+      '</div>'
+    ));
+  
+    Array.prototype.forEach.call(host.querySelectorAll("[data-send]"), function(b){
+      b.addEventListener("click", function(){
+        S.sendDoc(b.getAttribute("data-send"));
+        S.toast("Link minted. Nothing sent — copy it out, or release it from the Approval Desk.", "ok"); render();
+      });
+    });
+    Array.prototype.forEach.call(host.querySelectorAll("[data-audit]"), function(b){
+      b.addEventListener("click", function(){ audit(b.getAttribute("data-audit")); });
+    });
+  }
+  
+  function audit(id){
+    var d = S.docById(id);
+    var wrap = document.createElement("div"); wrap.className = "modal-scrim";
+    wrap.innerHTML = '<div class="modal"><h2>Audit trail</h2>' +
+      '<p class="sub">' + S.esc(d.title) + ' · ' + S.esc(d.subject) + ' · ' + S.esc(d.token) + '</p>' +
+      '<div class="tablewrap"><table><thead><tr><th>When</th><th>Who</th><th>What</th></tr></thead><tbody>' +
+      d.audit.map(function(a){
+        return '<tr><td class="mono small">' + S.esc(a.ts.replace("T"," ")) + '</td><td>' + S.esc(a.who) + '</td><td>' + S.esc(a.what) + '</td></tr>';
+      }).join("") + '</tbody></table></div>' +
+      (d.status==="Signed" ? '<div class="note good">Record frozen. It cannot be edited — only superseded by a new document.</div>' : '') +
+      '<div class="rowbtns" style="margin-top:14px"><button class="btn ghost" id="closeAudit">Close</button></div></div>';
+    document.body.appendChild(wrap);
+    wrap.querySelector("#closeAudit").addEventListener("click", function(){ wrap.remove(); });
+  }
+  
+  document.getElementById("newDoc").addEventListener("click", function(){
+    var wrap = document.createElement("div"); wrap.className = "modal-scrim";
+    var people = S.db().clients.map(function(c){ return {id:c.id, name:c.name, who:"Client"}; })
+      .concat(S.db().caregivers.map(function(c){ return {id:c.id, name:c.name, who:"Caregiver"}; }))
+      .concat(S.db().applicants.map(function(a){ return {id:a.id, name:a.name, who:"Applicant"}; }));
+    wrap.innerHTML = '<div class="modal"><h2>New document</h2>' +
+      '<label class="fld"><span>Template</span><select id="dTpl">' +
+        S.DOC_TEMPLATES.map(function(t){ return '<option value="' + t.id + '">' + S.esc(t.title) + ' — ' + S.esc(t.who) + '</option>'; }).join("") +
+      '</select></label>' +
+      '<label class="fld"><span>Who is it about?</span><select id="dSub">' +
+        people.map(function(p){ return '<option value="' + p.id + '">' + S.esc(p.name) + ' (' + p.who + ')</option>'; }).join("") +
+      '</select></label>' +
+      '<label class="fld"><span>Signer name</span><input id="dName" placeholder="The person who will sign"></label>' +
+      '<label class="fld"><span>Signer role</span><input id="dRole" placeholder="e.g. Daughter · payer"></label>' +
+      '<div class="rowbtns" style="margin-top:14px"><button class="btn" id="mk">Create the draft</button>' +
+      '<button class="btn ghost" id="cx">Cancel</button></div></div>';
+    document.body.appendChild(wrap);
+    wrap.querySelector("#cx").addEventListener("click", function(){ wrap.remove(); });
+    wrap.querySelector("#mk").addEventListener("click", function(){
+      var sid = wrap.querySelector("#dSub").value;
+      var p = people.filter(function(x){ return x.id===sid; })[0];
+      S.createDoc(wrap.querySelector("#dTpl").value, p.name, sid, {
+        name: wrap.querySelector("#dName").value || p.name,
+        role: wrap.querySelector("#dRole").value || p.who, email:""
+      });
+      wrap.remove(); S.toast("Draft created. Mint the link when you are ready.", "ok"); render();
+    });
+  });
+  render();
+})();
+</script>
+</body>
+</html>

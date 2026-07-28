@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Schedule & Match · Stay@Home OS</title>
+<meta name="description" content="The shift matrix, the caregiver match engine that shows its reasons, and shift broadcast.">
+<link rel="canonical" href="https://www.aexperiences.com/apps/stayathome/schedule.html">
+<meta property="og:title" content="Schedule & Match · Stay@Home OS">
+<meta property="og:description" content="The shift matrix, the caregiver match engine that shows its reasons, and shift broadcast.">
+<meta property="og:image" content="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<link rel="apple-touch-icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta name="theme-color" content="#2e7f7c">
+<link rel="stylesheet" href="stayathome.css">
+</head>
+<body>
+<script src="stayathome.js"></script>
+<script src="manual.js"></script>
+<script>
+(function(){
+  var S = window.StayAtHome;
+  var content = S.mount({ active:"schedule.html", crumb:"Schedule & Match" });
+  var wk = S.thisWeek();
+  var state = { sel:null };
+  
+  content.appendChild(S.page("Schedule & Match",
+    "The week at a glance. Click any open shift to see ranked caregivers — with the reasons, so you can argue with the ranking.",
+    '<button class="btn" id="newShift">+ New shift</button>'));
+  
+  var host = document.createElement("div"); content.appendChild(host);
+  
+  function dayCols(){
+    var out = [];
+    for (var i=0;i<7;i++) out.push(S.iso(S.addDays(new Date(wk+"T12:00:00"), i)));
+    return out;
+  }
+  
+  function render(){
+    host.innerHTML = "";
+    var days = dayCols();
+    var open = S.openShifts(wk);
+  
+    /* ---- the summary strip */
+    host.appendChild(S.card(
+      '<h2>This week</h2>' +
+      '<div class="stats">' +
+        S.stat("Shifts", S.shiftsInWeek(wk).length, "Scheduled across " + S.db().clients.filter(function(c){return c.status==="Active";}).length + " clients") +
+        S.stat("Covered", S.pct(S.fillRate(wk)||0), "Fill rate", (S.fillRate(wk)||0) >= 95 ? "good" : "watch") +
+        S.stat("Open hours", S.openHours(wk).toFixed(1), open.length + " shifts with nobody on them", open.length ? "watch" : "good") +
+        S.stat("Overtime", S.overtimeHours(wk,"assigned").toFixed(1) + " hrs", "Paid at " + S.RATE_RULES.otMultiplier + "×, billed at 1×", S.overtimeHours(wk,"assigned") ? "watch" : "good") +
+        S.stat("Booked value", S.money(S.weekRevenue(wk,"assigned")), "If the week runs as scheduled") +
+      '</div>'
+    ));
+  
+    /* ---- the matrix */
+    var matrix = '<div class="tablewrap"><table class="matrix"><thead><tr><th>Client</th>' +
+      days.map(function(d){ return '<th>' + S.dayLabel(d) + '</th>'; }).join("") + '</tr></thead><tbody>';
+    S.db().clients.forEach(function(cl){
+      var mine = S.shiftsInWeek(wk).filter(function(s){ return s.clientId===cl.id; });
+      if (!mine.length) return;
+      matrix += '<tr><td class="cnm"><b>' + S.esc(cl.name) + '</b>' +
+        '<div class="muted small"><span class="dotc" style="background:' + S.lineColor(cl.line) + '"></span>' +
+        S.esc(cl.line) + ' · ' + S.esc(cl.payer) + '</div></td>';
+      days.forEach(function(d){
+        var cell = mine.filter(function(s){ return s.date===d; });
+        matrix += '<td>' + (cell.length ? cell.map(function(s){
+          var openS = !s.caregiverId;
+          return '<button class="chip ' + (openS ? "open" : "") + '" data-sh="' + s.id + '">' +
+            '<span class="ct">' + S.hhmm(s.start) + '–' + S.hhmm(s.end) + '</span>' +
+            '<span class="cn">' + (openS ? "OPEN" : S.esc(S.caregiverName(s.caregiverId).split(" ")[0])) + '</span></button>';
+        }).join("") : '<span class="muted">·</span>') + '</td>';
+      });
+      matrix += '</tr>';
+    });
+    matrix += '</tbody></table></div>';
+  
+    host.appendChild(S.card(
+      '<h2>The week</h2>' +
+      '<p class="sub">Every client, every day. Amber cells are shifts nobody is on yet. Click any shift to open it.</p>' +
+      matrix
+    ));
+  
+    /* ---- open shifts, first */
+    if (open.length) {
+      host.appendChild(S.card(
+        '<h2>Open shifts — ' + S.openHours(wk).toFixed(1) + ' hours with nobody on them</h2>' +
+        '<p class="sub">These are booked with the family and unassigned. Every hour here is revenue you have promised and cannot currently deliver.</p>' +
+        '<div class="tablewrap"><table><thead><tr><th>When</th><th>Client</th><th>Service</th>' +
+        '<th class="right">Value</th><th class="right">Best match</th><th></th></tr></thead><tbody>' +
+        open.map(function(s){
+          var cl = S.clientById(s.clientId), r = S.rateFor(s);
+          var best = S.matchFor(s.id).filter(function(m){ return m.score >= 0; })[0];
+          return '<tr><td><b>' + S.dayLabel(s.date) + '</b><div class="muted small mono">' +
+              S.hhmm(s.start) + '–' + S.hhmm(s.end) + ' · ' + s.hours + ' hrs</div></td>' +
+            '<td>' + S.esc(cl?cl.name:"—") + '<div class="muted small">' + S.esc(cl?cl.city:"") + '</div></td>' +
+            '<td><span class="dotc" style="background:' + S.lineColor(s.line) + '"></span>' + S.esc(s.line) + '</td>' +
+            '<td class="right mono">' + S.money(r.billTotal) + '</td>' +
+            '<td class="right">' + (best ? S.esc(best.caregiver.name) + '<div class="muted small">score ' + best.score + '</div>' : '<i class="warn">no one qualifies</i>') + '</td>' +
+            '<td class="right"><button class="btn ghost" data-sh="' + s.id + '">Open</button></td></tr>';
+        }).join("") + '</tbody></table></div>'
+      ));
+    }
+  
+    /* ---- the selected shift + match panel */
+    if (state.sel) {
+      var s = S.shiftById(state.sel);
+      if (s) {
+        var cl = S.clientById(s.clientId), r = S.rateFor(s);
+        var ranked = S.matchFor(s.id);
+        var ok = ranked.filter(function(m){ return m.score >= 0; });
+        var blocked = ranked.filter(function(m){ return m.score < 0; });
+  
+        host.appendChild(S.card(
+          '<h2>' + S.esc(cl?cl.name:"") + ' — ' + S.dayLabel(s.date) + ', ' + S.hhmm(s.start) + '–' + S.hhmm(s.end) + '</h2>' +
+          '<p class="sub">' + S.esc(cl?cl.dx:"") + '</p>' +
+          '<div class="stats">' +
+            S.stat("Bills at", S.money2(r.billRate) + "/hr", r.weekend ? "Includes the weekend differential" : (r.holiday ? "Holiday rate" : "Standard rate")) +
+            S.stat("Shift value", S.money2(r.billTotal), s.hours + " hrs · " + s.payer) +
+            S.stat("Currently", s.caregiverId ? S.caregiverName(s.caregiverId) : "OPEN", s.status, s.caregiverId ? "good" : "watch") +
+            S.stat("Needs", (cl && cl.needs.length ? cl.needs.join(", ") : "no special skills"), "Client preferences: " + (cl && cl.prefs.length ? cl.prefs.join(", ") : "none stated")) +
+          '</div>' +
+          '<div class="rowbtns">' +
+            (s.caregiverId ? '<button class="btn ghost" id="unassign">Clear the assignment</button>' : '') +
+            '<button class="btn ghost" id="bcast">Broadcast to qualified caregivers</button>' +
+          '</div>' +
+          '<h3 style="margin-top:20px">Ranked caregivers</h3>' +
+          '<p class="sub">Every score shows its reasons. Distance, the skills this client\'s care needs, stated preferences, ' +
+          'continuity, and what the assignment does to their week.</p>' +
+          '<div class="tablewrap"><table><thead><tr><th class="right">Score</th><th>Caregiver</th><th>Why</th>' +
+          '<th class="right">Cost</th><th></th></tr></thead><tbody>' +
+          (ok.length ? ok.map(function(m){
+            var probe = { hours:s.hours, date:s.date, billRate:s.billRate, caregiverId:m.caregiver.id, id:s.id, mileage:s.mileage };
+            var pr = S.rateFor(Object.assign({}, s, { caregiverId:m.caregiver.id }));
+            return '<tr><td class="right"><b class="score">' + m.score + '</b></td>' +
+              '<td><b>' + S.esc(m.caregiver.name) + '</b><div class="muted small">' + S.esc(m.caregiver.city) +
+                ' · ' + S.money2(m.caregiver.payRate) + '/hr' + (m.caregiver.rating ? ' · ' + m.caregiver.rating + '★' : '') + '</div></td>' +
+              '<td class="why">' + m.reasons.map(function(x){ return '<span class="rz">' + S.esc(x) + '</span>'; }).join("") + '</td>' +
+              '<td class="right mono">' + S.money2(pr.cost) + '<div class="muted small">margin ' + S.pct(pr.marginPct,0) + '</div></td>' +
+              '<td class="right"><button class="btn" data-assign="' + m.caregiver.id + '">Assign</button></td></tr>';
+          }).join("") : '<tr><td colspan="5" class="muted">Nobody clears the hard blockers for this shift. Widen availability, clear a credential, or broadcast it.</td></tr>') +
+          '</tbody></table></div>' +
+          (blocked.length ?
+            '<h3 style="margin-top:18px">Cannot take this shift</h3>' +
+            '<div class="tablewrap"><table><tbody>' +
+            blocked.map(function(m){
+              return '<tr><td><b>' + S.esc(m.caregiver.name) + '</b></td>' +
+                '<td>' + m.blockers.map(function(b){ return S.tag(b, "bad"); }).join(" ") + '</td></tr>';
+            }).join("") + '</tbody></table></div>' +
+            '<div class="srcnote">Hard blockers are never overridden by a good score. An expired credential, a double-booking or ' +
+            'a shift outside stated availability removes a caregiver from consideration entirely.</div>'
+          : "")
+        ));
+      }
+    }
+  
+    /* ---- wiring */
+    Array.prototype.forEach.call(host.querySelectorAll("[data-sh]"), function(b){
+      b.addEventListener("click", function(){ state.sel = b.getAttribute("data-sh"); render();
+        setTimeout(function(){ var c = host.lastChild; if (c && c.scrollIntoView) c.scrollIntoView({behavior:"smooth", block:"start"}); }, 30); });
+    });
+    Array.prototype.forEach.call(host.querySelectorAll("[data-assign]"), function(b){
+      b.addEventListener("click", function(){
+        S.assignShift(state.sel, b.getAttribute("data-assign"));
+        S.toast("Assigned. The schedule and the money both updated.", "ok"); render();
+      });
+    });
+    var un = host.querySelector("#unassign");
+    if (un) un.addEventListener("click", function(){ S.assignShift(state.sel, null); S.toast("Assignment cleared — the shift is open again.", "ok"); render(); });
+    var bc = host.querySelector("#bcast");
+    if (bc) bc.addEventListener("click", function(){
+      var n = S.broadcast(state.sel).length;
+      S.toast("Broadcast staged to " + n + " qualified caregivers — it waits on the Approval Desk before it sends.", "ok");
+    });
+  }
+  render();
+  
+  document.getElementById("newShift").addEventListener("click", function(){
+    var cls = S.db().clients;
+    var name = prompt("New shift — which client?\n\n" + cls.map(function(c,i){ return (i+1)+". "+c.name; }).join("\n"));
+    if (!name) return;
+    var cl = cls[parseInt(name,10)-1] || cls.filter(function(c){ return c.name.toLowerCase().indexOf(String(name).toLowerCase())>=0; })[0];
+    if (!cl) return S.toast("No client matched that.", "bad");
+    var date = prompt("Date (YYYY-MM-DD)", S.iso(S.TODAY)); if (!date) return;
+    var st = prompt("Start (HH:MM, 24h)", "09:00"); if (!st) return;
+    var en = prompt("End (HH:MM, 24h)", "13:00"); if (!en) return;
+    S.addShift({ clientId:cl.id, date:date, start:st, end:en });
+    S.toast("Shift added — open and ready to fill.", "ok"); render();
+  });
+})();
+</script>
+</body>
+</html>

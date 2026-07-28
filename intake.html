@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Intake & Assessment · Stay@Home OS</title>
+<meta name="description" content="Inquiry to start of care — assessment, care plan, agreement out for signature.">
+<link rel="canonical" href="https://www.aexperiences.com/apps/stayathome/intake.html">
+<meta property="og:title" content="Intake & Assessment · Stay@Home OS">
+<meta property="og:description" content="Inquiry to start of care — assessment, care plan, agreement out for signature.">
+<meta property="og:image" content="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<link rel="apple-touch-icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta name="theme-color" content="#2e7f7c">
+<link rel="stylesheet" href="stayathome.css">
+</head>
+<body>
+<script src="stayathome.js"></script>
+<script src="manual.js"></script>
+<script>
+(function(){
+  var S = window.StayAtHome;
+  var content = S.mount({ active:"intake.html", crumb:"Intake & Assessment" });
+  content.appendChild(S.page("Intake & Assessment",
+    "Inquiry to first shift. Pipeline value is hours a week × what that service line actually bills, annualized — not a guess.",
+    '<button class="btn" id="addInq">+ New inquiry</button>'));
+  
+  var host = document.createElement("div"); content.appendChild(host);
+  function render(){
+    host.innerHTML = "";
+    var qs = S.db().inquiries;
+    var live = qs.filter(function(q){ return q.stage!=="Lost" && q.stage!=="Started"; });
+  
+    host.appendChild(S.card(
+      '<div class="stats">' +
+        S.stat("Live inquiries", live.length, "Everything not yet started or lost") +
+        S.stat("Pipeline value", S.money(S.pipelineValue()), "Annualized, at each line's actual rate", "good") +
+        S.stat("Won", qs.filter(function(q){return q.stage==="Started"||q.stage==="Agreement signed";}).length, "Signed or already started") +
+        S.stat("Lost", qs.filter(function(q){return q.stage==="Lost";}).length, "Worth a follow-up in 60 days") +
+      '</div>' +
+      '<div class="pipe">' + S.INTAKE_STAGES.map(function(st){
+        return '<div class="pipe-col"><div class="pipe-n">' + qs.filter(function(q){return q.stage===st;}).length +
+          '</div><div class="pipe-l">' + S.esc(st) + '</div></div>';
+      }).join("") + '</div>'
+    ));
+  
+    qs.forEach(function(q){
+      var lost = q.stage === "Lost";
+      host.appendChild(S.card(
+        '<div class="cardhead"><h2>' + S.esc(q.family) + '</h2>' +
+        '<span class="tag">' + S.esc(q.need) + '</span><span class="tag">' + S.esc(q.payer) + '</span>' +
+        (lost ? S.tag("lost","bad") : S.tag(S.money(S.inquiryValue(q)) + "/yr","good")) + '</div>' +
+        '<p class="sub">For <b>' + S.esc(q.client) + '</b> · ' + S.esc(q.city) + ' · ' + q.hrsWk + ' hrs/wk · received ' + S.esc(q.received) + '</p>' +
+        '<p>' + S.esc(q.note) + '</p>' +
+        '<table class="kv"><tbody>' +
+          '<tr><th>Came from</th><td>' + S.esc(q.source) + '</td></tr>' +
+          '<tr><th>Annualized value</th><td class="mono">' + S.money(S.inquiryValue(q)) +
+            ' <span class="muted small">' + q.hrsWk + ' hrs × ' + S.money2(S.lineRate(q.need)) + '/hr × 52</span></td></tr>' +
+        '</tbody></table>' +
+        '<div class="rowbtns"><label class="fld inline"><span>Stage</span><select data-stage="' + q.id + '">' +
+        S.INTAKE_STAGES.map(function(st){ return '<option' + (st===q.stage?" selected":"") + '>' + S.esc(st) + '</option>'; }).join("") +
+        '</select></label>' +
+        '<a class="btn ghost" href="sign.html">Send the agreement</a>' +
+        '<a class="btn ghost" href="careplans.html">Build the care plan</a></div>'
+      ));
+    });
+  
+    host.appendChild(S.card(
+      '<h2>The assessment</h2>' +
+      '<p class="sub">What a care coordinator actually captures on a tablet at the kitchen table. It becomes the care plan, ' +
+      'which becomes what caregivers are allowed to log.</p>' +
+      '<div class="split2">' +
+        '<div><h3>Activities of daily living</h3><ul class="ticks">' +
+          S.TASKS_ALLOWED.filter(function(t){return t.cat==="ADL";}).map(function(t){ return '<li>' + S.esc(t.k) + '</li>'; }).join("") +
+        '</ul><h3 style="margin-top:14px">Instrumental ADLs</h3><ul class="ticks">' +
+          S.TASKS_ALLOWED.filter(function(t){return t.cat==="IADL";}).map(function(t){ return '<li>' + S.esc(t.k) + '</li>'; }).join("") +
+        '</ul></div>' +
+        '<div><h3>Home & safety</h3><ul class="ticks">' +
+          '<li>Falls history and trip hazards</li><li>Stairs, thresholds, bathroom grab bars</li>' +
+          '<li>Smoke and CO alarms</li><li>Firearms, and how they are stored</li>' +
+          '<li>Pets in the home</li><li>Smoking in the home</li><li>Parking and entry — how does a caregiver get in?</li>' +
+        '</ul><h3 style="margin-top:14px">The people</h3><ul class="ticks">' +
+          '<li>Who pays, who decides, who is emergency contact</li>' +
+          '<li>Which family members get portal access, at what level</li>' +
+          '<li>Caregiver preferences the family will actually notice</li>' +
+          '<li>Anything that has gone wrong with a previous agency</li>' +
+        '</ul></div>' +
+      '</div>' +
+      '<div class="note">The last question is the most useful one on the form and the one most agencies never ask.</div>'
+    ));
+  
+    Array.prototype.forEach.call(host.querySelectorAll("[data-stage]"), function(sel){
+      sel.addEventListener("change", function(){
+        S.moveInquiry(sel.getAttribute("data-stage"), sel.value);
+        S.toast("Moved to " + sel.value + ".", "ok"); render();
+      });
+    });
+  }
+  render();
+  document.getElementById("addInq").addEventListener("click", function(){
+    var f = prompt("Who called? (the family contact)"); if (!f) return;
+    S.addInquiry({ family:f, client: prompt("Who is the care for?")||"", city: prompt("City", S.db().agency.city)||"",
+      need: prompt("Service line — " + S.SERVICE_LINES.map(function(l){return l.k;}).join(", "))||"Companion Care",
+      hrsWk: parseInt(prompt("Hours a week","12")||"0",10),
+      payer: prompt("Payer — " + S.PAYERS.map(function(p){return p.k;}).join(", "))||"Private Pay",
+      note: prompt("Anything to remember?")||"" });
+    S.toast("Logged. Book the assessment.", "ok"); render();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Books & Metrics · Stay@Home OS</title>
+<meta name="description" content="Margin by service line and by payer, fill rate, overtime drift and unbillable hours — computed, never reconstructed.">
+<link rel="canonical" href="https://www.aexperiences.com/apps/stayathome/books.html">
+<meta property="og:title" content="Books & Metrics · Stay@Home OS">
+<meta property="og:description" content="Margin by service line and by payer, fill rate, overtime drift and unbillable hours — computed, never reconstructed.">
+<meta property="og:image" content="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<link rel="apple-touch-icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta name="theme-color" content="#2e7f7c">
+<link rel="stylesheet" href="stayathome.css">
+</head>
+<body>
+<script src="stayathome.js"></script>
+<script src="manual.js"></script>
+<script>
+(function(){
+  var S = window.StayAtHome;
+  var content = S.mount({ active:"books.html", crumb:"Books & Metrics" });
+  var wk = S.thisWeek(), lw = S.lastWeek();
+  content.appendChild(S.page("Books & Metrics",
+    "Revenue tells you how busy you were. This page tells you whether it was worth it.", ''));
+  
+  var k = S.kpis();
+  content.appendChild(S.card('<h2>The scoreboard</h2><div class="stats">' +
+    k.map(function(x){ return S.stat(x.k, x.v, x.n, x.band); }).join("") + '</div>'));
+  
+  function table(title, sub, obj, pctObj, colorFn){
+    var keys = Object.keys(obj).sort(function(a,b){ return obj[b]-obj[a]; });
+    return S.card('<h2>' + title + '</h2><p class="sub">' + sub + '</p>' +
+      '<div class="tablewrap"><table><thead><tr><th>Segment</th><th class="right">Revenue</th>' +
+      '<th class="right">Margin</th><th>Relative margin</th></tr></thead><tbody>' +
+      keys.map(function(K){
+        var m = pctObj[K] || 0;
+        return '<tr><td>' + (colorFn ? '<span class="dotc" style="background:' + colorFn(K) + '"></span>' : '') + '<b>' + S.esc(K) + '</b></td>' +
+          '<td class="right mono">' + S.money(obj[K]) + '</td>' +
+          '<td class="right mono ' + (m < 20 ? "warn" : "") + '">' + S.pct(m,1) + '</td>' +
+          '<td style="min-width:170px">' + S.bar(m*2, colorFn ? colorFn(K) : "var(--tang)") + '</td></tr>';
+      }).join("") + '</tbody></table></div>');
+  }
+  
+  content.appendChild(table("Margin by service line",
+    "The line that looks biggest is not always the line that pays best. This is this week's assigned work.",
+    S.revenueByLine(wk,"assigned"), S.marginPctBy(wk,"assigned",function(s){return s.line;}), S.lineColor));
+  
+  content.appendChild(table("Margin by payer",
+    "Payer mix is the quietest lever in an agency. Two clients on the same service line can be worth very different amounts.",
+    S.revenueByPayer(wk,"assigned"), S.marginPctBy(wk,"assigned",function(s){return s.payer;}), null));
+  
+  /* the honest findings */
+  var mpl = S.marginPctBy(wk,"assigned",function(s){return s.line;});
+  var mpp = S.marginPctBy(wk,"assigned",function(s){return s.payer;});
+  var worstLine = Object.keys(mpl).sort(function(a,b){ return mpl[a]-mpl[b]; })[0];
+  var worstPayer = Object.keys(mpp).sort(function(a,b){ return mpp[a]-mpp[b]; })[0];
+  var ot = S.overtimeHours(wk,"assigned");
+  var unb = S.unbillableHours(lw);
+  var open = S.openHours(wk);
+  
+  var findings = [];
+  if (worstLine) findings.push("<b>" + S.esc(worstLine) + "</b> is your thinnest service line at " + S.pct(mpl[worstLine],1) +
+    ". Either the rate is wrong for what it costs to staff, or the hours are landing on your most expensive caregivers.");
+  if (worstPayer) findings.push("<b>" + S.esc(worstPayer) + "</b> returns " + S.pct(mpp[worstPayer],1) +
+    " — the lowest of your payers. Payer mix is a strategy decision, not an accident.");
+  if (ot) findings.push("<b>" + ot.toFixed(1) + " overtime hours</b> this week cost you " +
+    S.RATE_RULES.otMultiplier + "× on pay and 1× on the bill. That gap is pure margin loss and it is entirely a scheduling decision.");
+  if (unb) findings.push("<b>" + unb.toFixed(1) + " hours</b> were delivered last week and cannot be billed, because a payer that " +
+    "requires EVV has no clean record. Work done, money gone.");
+  if (open) findings.push("<b>" + open.toFixed(1) + " hours</b> are booked with families and unassigned. That is revenue you have " +
+    "already promised and currently cannot deliver.");
+  
+  content.appendChild(S.card(
+    '<h2>What the numbers are telling you</h2>' +
+    '<p class="sub">Read straight off your own data. Uncomfortable findings are shown, not smoothed.</p>' +
+    '<ul class="findings">' + findings.map(function(f){ return '<li>' + f + '</li>'; }).join("") + '</ul>'
+  ));
+  
+  content.appendChild(S.card(
+    '<h2>Benchmarks</h2>' +
+    '<div class="tablewrap"><table><thead><tr><th>Metric</th><th>Your number</th><th>Benchmark</th></tr></thead><tbody>' +
+      '<tr><td>Gross margin</td><td class="mono">' + S.pct(S.weekMarginPct(wk,"assigned"),1) + '</td><td class="muted">' + S.esc(S.BENCH.grossMarginPct.note) + '</td></tr>' +
+      '<tr><td>Fill rate</td><td class="mono">' + (S.fillRate(wk)==null?"—":S.pct(S.fillRate(wk))) + '</td><td class="muted">' + S.esc(S.BENCH.fillRatePct.note) + '</td></tr>' +
+      '<tr><td>EVV clean</td><td class="mono">' + (S.evvCompliancePct()==null?"—":S.pct(S.evvCompliancePct())) + '</td><td class="muted">' + S.esc(S.BENCH.evvCompliancePct.note) + '</td></tr>' +
+      '<tr><td>Caregiver turnover</td><td class="mono">—</td><td class="muted">' + S.esc(S.BENCH.turnoverPct.note) + '</td></tr>' +
+    '</tbody></table></div>' +
+    S.srcNote("Benchmark cells are deliberately blank. No national home-care figure has been sourced into this build, and a made-up " +
+              "comparison is worse than none. Enter your own targets and these fill in.")
+  ));
+  
+  content.appendChild(S.card(
+    '<h2>What this replaces</h2>' +
+    '<div class="chips">' + S.REPLACES.map(function(r){ return '<span class="chip static">' + S.esc(r) + '</span>'; }).join("") + '</div>' +
+    '<p class="muted small" style="margin-top:10px">Seven separate subscriptions, each with its own login, its own export, and its ' +
+    'own version of the truth about how many hours a caregiver worked.</p>'
+  ));
+})();
+</script>
+</body>
+</html>

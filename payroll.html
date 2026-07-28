@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Payroll · Stay@Home OS</title>
+<meta name="description" content="The caregiver side of the split rate — overtime, differentials, travel pay, mileage and employer burden.">
+<link rel="canonical" href="https://www.aexperiences.com/apps/stayathome/payroll.html">
+<meta property="og:title" content="Payroll · Stay@Home OS">
+<meta property="og:description" content="The caregiver side of the split rate — overtime, differentials, travel pay, mileage and employer burden.">
+<meta property="og:image" content="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<link rel="apple-touch-icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta name="theme-color" content="#2e7f7c">
+<link rel="stylesheet" href="stayathome.css">
+</head>
+<body>
+<script src="stayathome.js"></script>
+<script src="manual.js"></script>
+<script>
+(function(){
+  var S = window.StayAtHome;
+  var content = S.mount({ active:"payroll.html", crumb:"Payroll" });
+  var wk = S.lastWeek();
+  content.appendChild(S.page("Payroll",
+    "The other half of every hour. Week of " + S.dayLabel(wk) + ". Overtime is computed per caregiver across the whole week, " +
+    "not per shift — which is the only way it is ever correct.", ''));
+  
+  var t = S.payrollTotals(wk, "delivered");
+  content.appendChild(S.card(
+    '<div class="stats">' +
+      S.stat("Gross pay", S.money(t.gross), t.stubs.length + " caregivers with hours this week") +
+      S.stat("Overtime", t.otHrs.toFixed(1) + " hrs", "Paid at " + S.RATE_RULES.otMultiplier + "× past " + S.RATE_RULES.otAfterHours + " hrs/wk", t.otHrs ? "watch" : "good") +
+      S.stat("Employer burden", S.money(t.burden), S.pct(S.RATE_RULES.burdenPct*100,1) + " — taxes and workers' comp") +
+      S.stat("Mileage", S.money(t.mileage), "Reimbursement at " + S.money2(S.RATE_RULES.mileageRate) + "/mile — not wages") +
+      S.stat("Total cost", S.money(t.gross + t.burden + t.mileage), "What the week actually cost to deliver") +
+    '</div>' +
+    '<div class="note">Mileage is a reimbursement, not wages. Keeping it out of the wage base is what keeps the overtime ' +
+    'calculation and the tax treatment correct.</div>'
+  ));
+  
+  t.stubs.sort(function(a,b){ return b.gross - a.gross; }).forEach(function(st){
+    var over = st.otHrs > 0;
+    content.appendChild(S.card(
+      '<div class="cardhead"><h2>' + S.esc(st.caregiver.name) + '</h2>' +
+      '<span class="tag">' + S.money2(st.caregiver.payRate) + '/hr base</span>' +
+      (over ? S.tag(st.otHrs.toFixed(1) + " OT hrs","watch") : "") + '</div>' +
+      '<div class="tablewrap"><table><thead><tr><th>Date</th><th>Client</th><th class="right">Reg</th>' +
+      '<th class="right">OT</th><th class="right">Rate</th><th class="right">Pay</th></tr></thead><tbody>' +
+      st.lines.map(function(l){
+        return '<tr><td class="mono">' + S.dayLabel(l.date) + '</td><td>' + S.esc(l.client||"") + '</td>' +
+          '<td class="right mono">' + l.regHrs.toFixed(1) + '</td>' +
+          '<td class="right mono ' + (l.otHrs?"warn":"") + '">' + (l.otHrs ? l.otHrs.toFixed(1) : "—") + '</td>' +
+          '<td class="right mono">' + S.money2(l.rate) + (l.weekend ? ' <span class="muted small">wknd</span>' : '') + '</td>' +
+          '<td class="right mono">' + S.money2(l.amount) + '</td></tr>';
+      }).join("") +
+      '<tr class="tot"><td colspan="2"><b>Week</b></td>' +
+      '<td class="right mono"><b>' + st.regHrs.toFixed(1) + '</b></td>' +
+      '<td class="right mono"><b>' + st.otHrs.toFixed(1) + '</b></td><td></td>' +
+      '<td class="right mono"><b>' + S.money2(st.total) + '</b></td></tr>' +
+      '</tbody></table></div>' +
+      (over ? '<div class="note warn">These overtime hours cost ' +
+        S.money2(st.otHrs * st.caregiver.payRate * (S.RATE_RULES.otMultiplier - 1)) +
+        ' more than straight time — and the clients were <b>not</b> billed extra for them. That is margin, gone. ' +
+        'The Schedule room warns before an assignment creates it.</div>' : '')
+    ));
+  });
+  
+  content.appendChild(S.card(
+    '<h2>The rules this runs on</h2>' +
+    '<div class="tablewrap"><table><tbody>' +
+      '<tr><th>Overtime threshold</th><td>' + S.RATE_RULES.otAfterHours + ' hrs per caregiver per week</td></tr>' +
+      '<tr><th>Overtime multiplier</th><td>' + S.RATE_RULES.otMultiplier + '× — <b>on pay only</b>. Clients are not billed a multiplier because the office over-scheduled.</td></tr>' +
+      '<tr><th>Weekend</th><td>+' + S.money2(S.RATE_RULES.weekendPayAdj) + '/hr pay · +' + S.money2(S.RATE_RULES.weekendBillAdj) + '/hr bill</td></tr>' +
+      '<tr><th>Observed holiday</th><td>' + S.RATE_RULES.holidayMultiplier + '× both sides</td></tr>' +
+      '<tr><th>Travel between clients</th><td>' + S.money2(S.RATE_RULES.travelPayPerHr) + '/hr paid drive time</td></tr>' +
+      '<tr><th>Mileage</th><td>' + S.money2(S.RATE_RULES.mileageRate) + '/mile reimbursed, outside the wage base</td></tr>' +
+      '<tr><th>Employer burden</th><td>' + S.pct(S.RATE_RULES.burdenPct*100,1) + ' applied to gross for margin math</td></tr>' +
+    '</tbody></table></div>' +
+    S.srcNote("These are this agency's own draft policy figures, not statutory rates. Federal and state overtime, travel-time and " +
+              "mileage rules differ — set yours with your accountant. Nothing here is tax advice.") +
+    '<div class="note">Filing and paying — the actual movement of money to a bank account — needs a payroll processor. ' +
+    'This room produces the numbers and the stubs; the processor executes them.</div>'
+  ));
+})();
+</script>
+</body>
+</html>

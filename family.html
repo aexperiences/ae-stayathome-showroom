@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Family Portal · Stay@Home OS</title>
+<meta name="description" content="What the out-of-state adult child sees — live clock-ins, care notes, tasks completed and the bill.">
+<link rel="canonical" href="https://www.aexperiences.com/apps/stayathome/family.html">
+<meta property="og:title" content="Family Portal · Stay@Home OS">
+<meta property="og:description" content="What the out-of-state adult child sees — live clock-ins, care notes, tasks completed and the bill.">
+<meta property="og:image" content="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<link rel="apple-touch-icon" href="https://www.aexperiences.com/StayAtHome_OS.png">
+<meta name="theme-color" content="#2e7f7c">
+<link rel="stylesheet" href="stayathome.css">
+</head>
+<body>
+<script src="stayathome.js"></script>
+<script src="manual.js"></script>
+<script>
+(function(){
+  var S = window.StayAtHome;
+  var content = S.mount({ active:"family.html", crumb:"Family Portal" });
+  content.appendChild(S.page("Family Portal",
+    "In home care the person receiving care and the person paying are usually different people — often in different states, " +
+    "and often more than one sibling. The portal models a family, not a customer.", ''));
+  
+  var host = document.createElement("div"); content.appendChild(host);
+  var sel = S.db().clients[0] ? S.db().clients[0].id : null;
+  
+  function render(){
+    host.innerHTML = "";
+    host.appendChild(S.card(
+      '<h2>Who can see what</h2>' +
+      '<p class="sub">Permission levels exist so siblings can follow along without every one of them being able to change the plan.</p>' +
+      '<div class="tablewrap"><table><thead><tr><th>Level</th><th>Sees visits &amp; notes</th><th>Sees the bill</th>' +
+      '<th>Can change the plan</th><th>Can add family</th></tr></thead><tbody>' +
+        '<tr><td><b>Payer + decisions</b></td><td>✓</td><td>✓</td><td>✓ requests it</td><td>✓</td></tr>' +
+        '<tr><td><b>Split payer</b></td><td>✓</td><td>✓ their share</td><td>—</td><td>—</td></tr>' +
+        '<tr><td><b>View + notes</b></td><td>✓</td><td>—</td><td>—</td><td>—</td></tr>' +
+        '<tr><td><b>View only</b></td><td>✓</td><td>—</td><td>—</td><td>—</td></tr>' +
+      '</tbody></table></div>'
+    ));
+  
+    host.appendChild(S.card(
+      '<h2>Preview the portal</h2>' +
+      '<label class="fld inline"><span>As the family of</span><select id="pick">' +
+      S.db().clients.map(function(c){ return '<option value="' + c.id + '"' + (c.id===sel?" selected":"") + '>' + S.esc(c.name) + '</option>'; }).join("") +
+      '</select></label>'
+    ));
+  
+    var cl = S.clientById(sel); if (!cl) return wire();
+    var recent = S.db().shifts.filter(function(s){ return s.clientId===cl.id && (s.status==="Completed"||s.status==="In progress"); })
+      .sort(function(a,b){ return a.date < b.date ? 1 : -1; }).slice(0, 10);
+    var upcoming = S.db().shifts.filter(function(s){ return s.clientId===cl.id && s.status==="Booked"; })
+      .sort(function(a,b){ return a.date < b.date ? -1 : 1; }).slice(0, 6);
+    var inv = S.invoiceFor(cl.id);
+  
+    host.appendChild(S.card(
+      '<div class="portal">' +
+        '<div class="cardhead"><h2>' + S.esc(cl.name) + '</h2><span class="tag">' + S.esc(cl.line) + '</span></div>' +
+        '<p class="sub">This is what the family sees when they log in. No jargon, no internal codes, no rates a caregiver is paid.</p>' +
+        '<h3>On the account</h3>' +
+        '<div class="tablewrap"><table><tbody>' +
+        cl.family.map(function(f){
+          return '<tr><td><b>' + S.esc(f.name) + '</b><div class="muted small">' + S.esc(f.rel) + ' · ' + S.esc(f.city) + '</div></td>' +
+            '<td>' + S.tag(f.role, f.role.indexOf("Payer")>=0 ? "good" : "") + '</td>' +
+            '<td class="mono small">' + S.esc(f.phone) + '</td>' +
+            '<td>' + (f.portal ? S.tag("portal access","good") : '<span class="muted">no access</span>') + '</td></tr>';
+        }).join("") + '</tbody></table></div>' +
+  
+        '<h3 style="margin-top:20px">Recent visits</h3>' +
+        '<div class="tablewrap"><table><thead><tr><th>When</th><th>Caregiver</th><th>Arrived</th><th>What was done</th></tr></thead><tbody>' +
+        (recent.length ? recent.map(function(s){
+          var st = S.evvState(s);
+          return '<tr><td class="mono">' + S.dayLabel(s.date) + '</td>' +
+            '<td>' + S.esc(S.caregiverName(s.caregiverId)) + '</td>' +
+            '<td>' + (s.evv && s.evv.inTs ? S.hhmm(s.start) + ' ' + S.tag(st==="Verified"?"on time":st, S.evvBand(st)) : '<span class="muted">—</span>') + '</td>' +
+            '<td class="muted small">' + (s.evv && s.evv.tasks && s.evv.tasks.length ? S.esc(s.evv.tasks.join(" · ")) : (s.status==="In progress" ? "visit in progress" : "—")) + '</td></tr>';
+        }).join("") : '<tr><td colspan="4" class="muted">No visits yet.</td></tr>') +
+        '</tbody></table></div>' +
+  
+        '<h3 style="margin-top:20px">Coming up</h3>' +
+        '<div class="tablewrap"><table><tbody>' +
+        (upcoming.length ? upcoming.map(function(s){
+          return '<tr><td class="mono">' + S.dayLabel(s.date) + '</td><td class="mono">' + S.hhmm(s.start) + '–' + S.hhmm(s.end) + '</td>' +
+            '<td>' + S.esc(S.caregiverName(s.caregiverId)) + '</td></tr>';
+        }).join("") : '<tr><td class="muted">Nothing scheduled ahead.</td></tr>') +
+        '</tbody></table></div>' +
+  
+        (inv && inv.lines.length ?
+          '<h3 style="margin-top:20px">The bill — week of ' + S.dayLabel(inv.week) + '</h3>' +
+          '<div class="tablewrap"><table><tbody>' +
+          '<tr><th>Verified hours</th><td class="mono">' + inv.hours.toFixed(1) + '</td></tr>' +
+          '<tr><th>Amount</th><td class="mono">' + S.money2(inv.total) + '</td></tr>' +
+          '<tr><th>How it is paid</th><td>' + S.esc(inv.terms) + '</td></tr>' +
+          '</tbody></table></div>' +
+          '<p class="muted small">Only verified visits appear on a bill. If a visit has no record, the family is not charged for it.</p>'
+        : '') +
+      '</div>'
+    ));
+    wire();
+  }
+  function wire(){
+    var p = host.querySelector("#pick");
+    if (p) p.addEventListener("change", function(){ sel = p.value; render(); });
+  }
+  render();
+})();
+</script>
+</body>
+</html>
