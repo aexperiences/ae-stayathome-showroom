@@ -591,3 +591,21 @@ code.tok{font-family:var(--mono);font-size:11.5px;background:var(--sunk);padding
 .warn{color:var(--bad)}
 .portal{background:var(--sunk);border-radius:var(--r);padding:18px 20px}
 @media(max-width:640px){.portal{padding:14px 12px}}
+
+/* -- aliases so the room pages and the shared chassis agree on names.
+      The fleet chassis calls the KPI container .statrow and the card subtitle
+      .card-sub; these rooms write .stats and .sub. Same thing, one definition. */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:11px;margin-top:10px}
+@media(max-width:640px){.stats{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}}
+.card > p.sub,p.sub{font-size:12.6px;color:var(--mut);margin:2px 0 13px;line-height:1.6}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:10px}
+.tablewrap table{width:100%;border-collapse:collapse;font-size:13px}
+.tablewrap th{text-align:left;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--mut);font-weight:800;padding:8px 10px 8px 0;border-bottom:1px solid var(--line);white-space:nowrap}
+.tablewrap td{padding:10px 10px 10px 0;border-bottom:1px solid var(--line-2);color:var(--ink);vertical-align:top}
+.tablewrap tr:last-child td{border-bottom:none}
+td.right,th.right{text-align:right;padding-right:0}
+.mono{font-family:var(--mono)}
+.small{font-size:11.5px}
+.muted{color:var(--mut)}
+.card>h3{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin:0 0 8px}
