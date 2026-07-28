@@ -604,7 +604,7 @@ code.tok{font-family:var(--mono);font-size:11.5px;background:var(--sunk);padding
   color:var(--mut);font-weight:800;padding:8px 10px 8px 0;border-bottom:1px solid var(--line);white-space:nowrap}
 .tablewrap td{padding:10px 10px 10px 0;border-bottom:1px solid var(--line-2);color:var(--ink);vertical-align:top}
 .tablewrap tr:last-child td{border-bottom:none}
-td.right,th.right{text-align:right;padding-right:0}
+td.right,th.right{text-align:right;padding-right:0;padding-left:16px}
 .mono{font-family:var(--mono)}
 .small{font-size:11.5px}
 .muted{color:var(--mut)}

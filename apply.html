@@ -65,6 +65,7 @@
         <input id="aExp" placeholder="e.g. 3 years in assisted living — or 'none, but I looked after my mum'"></label>
     </div>
 
+    <div id="applyErr" role="alert" style="display:none;background:rgba(162,74,118,.13);border-left:3px solid #a24a76;border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:13.5px;color:#4c5f5c"></div>
     <button class="go" id="submit">Send my application</button>
     <p class="muted small" style="text-align:center;margin-top:12px">
       We will only use this to contact you about caregiving work.</p>
@@ -95,7 +96,13 @@
   document.getElementById("submit").addEventListener("click", function(){
     var name = document.getElementById("aName").value.trim();
     var phone = document.getElementById("aPhone").value.trim();
-    if (!name || !phone) { alert("We need a name and a mobile number to call you back."); return; }
+    if (!name || !phone) {
+      var e = document.getElementById("applyErr");
+      e.textContent = "We just need your name and a mobile number so we can call you back.";
+      e.style.display = "block"; e.scrollIntoView({behavior:"smooth", block:"center"});
+      return;
+    }
+    document.getElementById("applyErr").style.display = "none";
     var avail = {};
     DAYS.forEach(function(d){ avail[d[0]] = document.getElementById("d_" + d[0]).value.trim(); });
     var certs = [];

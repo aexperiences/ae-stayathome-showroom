@@ -677,7 +677,7 @@
         "SERVICES. {{AGENCY}} will provide non-medical home care services to {{CLIENT}} at the address on file, on the schedule agreed in the care plan.",
         "SCOPE. Services are NON-MEDICAL. Caregivers may assist with activities of daily living, meals, housekeeping, errands, transportation and companionship. Caregivers may NOT administer medication, perform injections, wound care, tube feeding, catheter care, or any skilled nursing task.",
         "RATES. Services are billed at {{RATE}} per hour. Weekend hours carry a differential. Observed holidays are billed at 1.5×. Mileage is reimbursed at the published rate.",
-        "BILLING. {{PAYER}}. Invoices reflect verified visit hours only.",
+        "BILLING. Payment terms: {{PAYER}} Invoices reflect verified visit hours only.",
         "CANCELLATION. Please give 24 hours notice to cancel a scheduled visit. Visits cancelled with less notice may be billed.",
         "TERMINATION. Either party may end this agreement with 14 days written notice.",
         "ACKNOWLEDGEMENT. I have received the client rights notice, the privacy notice, and the service agreement, and I have had the opportunity to ask questions."
@@ -1277,7 +1277,7 @@
       .replace(/\{\{AGENCY\}\}/g, ctx.agency || db().agency.name)
       .replace(/\{\{CLIENT\}\}/g, ctx.client || "the client")
       .replace(/\{\{RATE\}\}/g,   ctx.rate   || "the agreed rate")
-      .replace(/\{\{PAYER\}\}/g,  ctx.payer  || "the agreed payer");
+      .replace(/\{\{PAYER\}\}/g,  ctx.payer  || "as agreed with the agency.");
   }
   function docContext(doc){
     var d = db(), ctx = { agency:d.agency.name, client:doc.subject };

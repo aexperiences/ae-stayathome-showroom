@@ -81,6 +81,7 @@
       '<div id="typedWrap" style="display:none"><input id="typedName" class="typed" placeholder="Type your full name" style="width:100%;border:2px dashed var(--line);border-radius:12px;background:#fff"></div>' +
       '<div style="margin-top:8px"><button class="btn ghost" id="clearSig">Clear</button></div>' +
       '<div class="consent">' + S.esc(S.fillTemplate(S.ESIGN_CONSENT, ctx)) + '</div>' +
+      '<div id="signErr" class="signerr" role="alert" style="display:none"></div>' +
       '<button class="btn" id="adopt" style="width:100%;padding:14px;font-size:15px">Adopt and sign</button>';
 
     canvas = document.getElementById("sig");
@@ -123,7 +124,18 @@
       var typed = document.getElementById("typedName").value.trim();
       if (mode === "draw" && !drawn) missing.push("Your signature");
       if (mode === "type" && !typed) missing.push("Your typed signature");
-      if (missing.length) { alert("Still needed:\n\n• " + missing.join("\n• ")); return; }
+      var errBox = document.getElementById("signErr");
+      if (missing.length) {
+        /* Never alert() on a signing page. A modal dialog blocks the renderer,
+           is suppressed outright in some embedded browsers, and gives the signer
+           no way to see WHICH field they missed while they are fixing it. */
+        errBox.innerHTML = "<b>Still needed before you can sign:</b><ul><li>" +
+          missing.map(function(m){ return S.esc(m); }).join("</li><li>") + "</li></ul>";
+        errBox.style.display = "block";
+        errBox.scrollIntoView({ behavior:"smooth", block:"center" });
+        return;
+      }
+      errBox.style.display = "none";
       var sig = mode === "draw" ? canvas.toDataURL("image/png") : ("typed:" + typed);
       if (mode === "type" && !vals.name) vals.name = typed;
       S.signDoc(doc.token, vals, sig, { agent: navigator.userAgent.slice(0,80) });
