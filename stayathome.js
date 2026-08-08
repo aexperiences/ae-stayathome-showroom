@@ -1644,7 +1644,7 @@
       desc:"A growing agency. Adds the referral book, books & metrics and the AI department org on top of everything above.",
       base:"Multi-office · unlimited caregivers · referral CRM · agent org",
       includes:["schedule","evv","care","recruit","creds","referral","intake","family","sign","billing","payroll","books","org"] },
-    grandsuite: { key:"grandsuite", name:"Grandsuite", rank:3, mo:2600, build:18000,
+    grandsuite: { key:"grandsuite", name:"Grandsuite", rank:3, mo:2600, build:16800,
       desc:"Nothing held back. Every department, multi-state, dedicated environment, data migration and your own branded caregiver app.",
       base:"Multi-state · unlimited · dedicated environment · migration · branded app",
       includes:["schedule","evv","care","recruit","creds","referral","intake","family","sign","billing","payroll","books","org"] }
