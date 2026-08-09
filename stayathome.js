@@ -1783,7 +1783,7 @@
           (off?'<span class="tier-tag">+'+money(ROOMS[it.room].mo)+'</span>':'')+'</a>');
         if (off) {
           a.title = "Not in this build — add "+ROOMS[it.room].label+" for "+
-                    money(ROOMS[it.room].mo)+"/mo + "+money(ROOMS[it.room].build)+" build";
+                    money(ROOMS[it.room].mo)+"/mo";
           a.addEventListener("click", function(){
             toggleRoom(it.room);
             toast(ROOMS[it.room].label+" added — "+priceLabel(), "ok");
