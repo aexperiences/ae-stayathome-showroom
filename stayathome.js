@@ -1721,7 +1721,7 @@
              rooms:rooms, alaMo:alaMo, savingMo: Math.max(0, alaMo - mo),
              changed: adds.length>0 || offs.length>0 };
   }
-  function priceLabel(){ var p = priceNow(); return money(p.mo) + "/mo · " + money(p.build) + " build"; }
+  function priceLabel(){ var p = priceNow(); return money(p.mo) + "/mo licensed"; }
 
   /* ----------------------------------------------------------- the agent org */
   var SEATS = [
@@ -1827,7 +1827,7 @@
       '<div class="spacer"></div>' +
       '<div class="tierpill" id="tierPillStatic">' +
         '<span class="dot"></span><div><b>'+esc(p.tier.name)+(p.changed?' <i class="cfg">configured</i>':'')+'</b> ' +
-        '<span class="price">'+money(p.mo)+'/mo · '+money(p.build)+' build</span></div></div>' +
+        '<span class="price">'+money(p.mo)+'/mo licensed</span></div></div>' +
       '<div class="who"><div class="av">'+esc(initials)+'</div><div>'+esc(ag.administrator)+'<br>' +
         '<span class="muted small">Administrator · '+esc(ag.name)+'</span></div></div>';
     return bar;
