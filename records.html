@@ -44,7 +44,7 @@
 (function () {
   var T=window.StayAtHome;
   var c=T.mount({active:"records.html",crumb:"Records"});
-  var KEY="stayathome_records_v1";
+  var KEY="stayathome_records_v2";
 
   /* The filing plan — one cabinet per real thing the firm keeps. */
   var CABINETS=[
@@ -58,17 +58,16 @@
     {k:"policy",ic:"⚖",name:"Policy & licensing",desc:"State licence, policy manual, client rights notice, survey results."}
   ];
 
-  /* Seeded records — real McArthur artifacts where they exist, honestly labeled. */
-  var SEED=[
-    {cab:"agreements",name:"Services agreement — Marguerite Sol",kind:"pdf",tag:"sot",who:"Marisol Vance",when:"2026-07-25",note:""},
-    {cab:"careplans",name:"Care plan — Vernon Ashby (rev 3)",kind:"pdf",tag:"sot",who:"Ines Kovacs",when:"2026-07-27",note:"Revised — needs re-acknowledgement"},
-    {cab:"credentials",name:"TB screening — Rosalind Fairley",kind:"pdf",tag:"",who:"Ellis Barnhart",when:"2025-06-14",note:"EXPIRED"},
-    {cab:"payer",name:"Medicaid waiver approval — Harold Bequette",kind:"pdf",tag:"sot",who:"Auden Pike",when:"2026-07-01",note:""},
-    {cab:"employment",name:"Signed employment packet — Odell Grant",kind:"pdf",tag:"sot",who:"Ellis Barnhart",when:"2026-05-12",note:""},
-    {cab:"evv",name:"EVV exception log — week of Jul 19",kind:"csv",tag:"",who:"Rosa Delacroix",when:"2026-07-26",note:""},
-    {cab:"insurance",name:"Certificate of insurance — 2026",kind:"pdf",tag:"sot",who:"Marisol Vance",when:"2026-01-08",note:""},
-    {cab:"policy",name:"Idaho home care licence",kind:"pdf",tag:"sot",who:"Marisol Vance",when:"2026-03-02",note:""}
-  ];
+  /* Seeded records — built from this system's own book (its people, jobs and paperwork), never typed in. */
+  var SEED=(function(){ var D={}; try{ D=T.db()||{}; }catch(e){} var out=[], today=((T.TODAY instanceof Date)?T.TODAY:new Date()).toISOString().slice(0,10);
+    function add(cab,name,kind,tag,who,when,note){ if(name) out.push({cab:cab,name:String(name),kind:kind||"pdf",tag:tag||"",who:who||"",when:when||"",note:note||""}); }
+    function exp(d){ return !d||!/^\d{4}-/.test(d)?"":(d<today?"EXPIRED":"Expires "+d); }
+    try{ var A=(D.agency||{}).administrator||"", CL={}; (D.clients||[]).forEach(function(c){CL[c.id]=c;});
+      (D.documents||[]).forEach(function(d){ var cab=/employ/i.test(d.title)?"employment":/care plan/i.test(d.title)?"careplans":"agreements"; add(cab,d.title+" — "+d.subject,"pdf",d.status==="Signed"?"sot":"",A,d.created,d.status); });
+      (D.clients||[]).filter(function(c){return c.status==="Active";}).forEach(function(c){ add("careplans","Care plan — "+c.name+" ("+c.line+")","pdf","sot",A,c.start,""); if(c.payer&&c.payer!=="Private Pay") add("payer",c.payer+" authorization — "+c.name,"pdf","sot",A,c.start,""); });
+      (D.caregivers||[]).forEach(function(g){ Object.keys(g.creds||{}).forEach(function(k){ var d=g.creds[k], e=exp(d); add("credentials",k+" — "+g.name,"pdf",e==="EXPIRED"?"":"sot",A,/^\d{4}-/.test(d)?d:"",e||d); }); });
+      var ag=D.agency||{}; if(ag.license) add("policy","State home care license — "+ag.license,"pdf","sot",A,"",""); }catch(e){}
+    return out; })();
 
   function load(){ try{ var d=JSON.parse(sessionStorage.getItem(KEY)); if(d&&d.length) return d; }catch(e){} return SEED.slice(); }
   function persist(){ try{ sessionStorage.setItem(KEY,JSON.stringify(FILES)); }catch(e){} }

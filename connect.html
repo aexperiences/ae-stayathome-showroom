@@ -78,13 +78,13 @@
   var T=window.StayAtHome;
   var c=T.mount({active:"connect.html",crumb:"Connect"});
   var API=window.STAYATHOME_API+'/api/connect'; var NS='stayathome';
-  var TEAM=[
-    {slug:"marisol",name:"Marisol Vance",role:"Administrator",init:"MV"},
-    {slug:"rosa",name:"Rosa Delacroix",role:"Scheduling Coordinator",init:"RD"},
-    {slug:"ellis",name:"Ellis Barnhart",role:"Recruiting & HR",init:"EB"},
-    {slug:"auden",name:"Auden Pike",role:"Billing & Payroll",init:"AP"},
-    {slug:"ines",name:"Ines Kovacs",role:"Compliance & Care Plans",init:"IK"}
-  ];
+  /* The team — read from this system's own seeded people, never typed in here. */
+  var TEAM=(function(){ var D={}; try{ D=T.db()||{}; }catch(e){} var out=[], seen={};
+    function add(n,r){ n=String(n||"").trim(); if(!n||seen[n]) return; seen[n]=1;
+      var w=n.replace(/^Coach\s+/,"").replace(/,.*$/,"").split(/\s+/);
+      out.push({slug:n.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""),name:n,role:String(r||""),init:(((w[0]||"")[0]||"")+(w.length>1?w[w.length-1][0]:((w[0]||"")[1]||""))).toUpperCase()}); }
+    try{ var a=D.agency||{}; add(a.administrator,"Administrator"); (D.caregivers||[]).forEach(function(c){ if(c.status==="Active") add(c.name,"Caregiver"); }); }catch(e){}
+    return out; })();
   var CHANNELS=[
     {ch:"office",name:"#office",desc:"Whatever the office needs to see."},
     {ch:"field",name:"#field",desc:"Caregivers on the road — coverage, call-outs, handoffs."},
