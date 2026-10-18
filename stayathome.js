@@ -1699,6 +1699,7 @@
       { href:"schedule.html",  label:"Schedule & Match",  ic:"▦", room:"schedule", accent:"schedule" },
       { href:"evv.html",       label:"Field Ops · EVV",   ic:"◉", room:"evv",      accent:"field" },
       { href:"careplans.html", label:"Care Plans",        ic:"♥", room:"care",     accent:"care" },
+      { href:"aimos.html",     label:"Supply Closet",     ic:"▦", accent:"care", icon:"icons/aimos-supplies.svg" },
       { href:"family.html",    label:"Family Portal",     ic:"☗", room:"family",   accent:"family" }
     ]},
     { group:"Paper", items:[
