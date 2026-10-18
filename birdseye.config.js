@@ -6,7 +6,7 @@
   window.BIRDSEYE = {
     id: "stayathome", engine: "StayAtHome", routing: "multipage", home: "dashboard.html",
     trade: "Non-medical home care agency (scheduling & match, EVV, credentials, Medicaid/private-pay billing)",
-    brand: {"name": "Stay@Home OS", "short": "Stay@Home", "iconFile": "StayAtHome_OS.png", "version": "V. Birdseye 1.0", "line": "Mothership", "icon": "birdseye/os-icon.png", "aos": "birdseye/marks/aos-business.png", "aeMark": "birdseye/marks/ae-mark.png", "store": "https://aexperiences.studio/store.html"},
+    brand: {"name": "Stay@Home OS", "short": "Stay@Home", "iconFile": "StayAtHome_OS.png", "version": "V. Birdseye 1.0", "line": "Mothership", "icon": "birdseye/os-icon.png", "aos": "birdseye/marks/aos-business.png", "aeMark": "birdseye/marks/ae-mark.png", "birdseyeIcon": "birdseye/marks/birdseye.png", "store": "https://aexperiences.studio/store.html"},
     houseNoun: "agency",
     houseName: function(E,D,H,S){ return (D.agency && (D.agency.dba || D.agency.name)); },
     today: function(E,D,H,S){ return (E.TODAY); },
