@@ -1685,8 +1685,7 @@
       { href:"contacts.html",  label:"Contacts",          ic:"☎" },
       { href:"connect.html",   label:"Connect · Video",   ic:"◉" },
       { href:"records.html",   label:"Records · Filing",  ic:"▤" },
-      { href:"approvals.html", label:"Approval Desk",     ic:"✓", accent:"ops" }
-    ]},
+      { href:"approvals.html", label:"Approval Desk",     ic:"✓", accent:"ops" }, { href:"masterlist.html", label:"Master List", ic:"✎" }, { href:"mail.html", label:"Mail", ic:"✉" } ]},
     { group:"Growth", items:[
       { href:"referrals.html", label:"Referral CRM",      ic:"◈", room:"referral", accent:"referral" },
       { href:"intake.html",    label:"Intake & Assessment",ic:"✦", room:"intake",  accent:"intake" }
@@ -1703,13 +1702,13 @@
       { href:"family.html",    label:"Family Portal",     ic:"☗", room:"family",   accent:"family" }
     ]},
     { group:"Paper", items:[
-      { href:"sign.html",      label:"e-Sign",            ic:"✍", room:"sign",     accent:"sign" }
-    ]},
+      { href:"sign.html",      label:"e-Sign",            ic:"✍", room:"sign",     accent:"sign" }, { href:"documents.html", label:"Documents", ic:"▤" } ]},
     { group:"Money", items:[
       { href:"billing.html",   label:"Billing & Invoices",ic:"◧", room:"billing", accent:"money" },
       { href:"payroll.html",   label:"Payroll",           ic:"◨", room:"payroll", accent:"money" },
       { href:"books.html",     label:"Books & Metrics",   ic:"◭", room:"books",   accent:"money" }
     ]},
+    { group:"The House", items:[ { href:"manual.html", label:"Owner's Manual", ic:"?" }, { href:"it.html", label:"IT · System Health", ic:"♥" }, { href:"hr.html", label:"HR · People Ops", ic:"☷" }, { href:"law.html", label:"Law · Contracts", ic:"⚖" }, { href:"skins.html", label:"Skins", ic:"◐" } ] },
     { group:"The Org", items:[
       { href:"org.html",       label:"Agent Org · Bus",   ic:"❖", room:"org",     accent:"ops" }
     ]}
