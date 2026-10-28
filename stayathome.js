@@ -1868,7 +1868,7 @@
       '<a href="javascript:void(0)" id="resetFloor">Start with a clean slate</a></div>');
   }
   function footer(){
-    return el('<div class="ae-credit"><a href="https://www.aexperiences.com/" class="ae-triad" aria-label="AOS — Accelerated Experiences LLC"><img src="/marks/aos/aos-business.png" alt="Accelerated Operating Systems" style="height:30px;width:auto;vertical-align:middle"></a><br>Stay@Home OS is a white-label build. ' +
+    return el('<div class="ae-credit"><a href="https://www.aexperiences.com/" class="ae-triad" aria-label="AOS — Accelerated Experiences LLC"><img src="/marks/aos/aos-business.png" alt="Accelerated Operating Systems" style="height:30px;width:auto;vertical-align:middle"></a><br>Stay@Home OS is an Accelerated Operating System by Accelerated Experiences LLC. ' +
       'Sample data is a fictional agency. Benchmark figures are sourced or shown blank — never invented. ' +
       'Nothing here is legal, tax or clinical advice.</div>');
   }
